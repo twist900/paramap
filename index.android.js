@@ -12,20 +12,23 @@ import {
   View
 } from 'react-native';
 
+import AnimatedViews from './AnimatedViews';
+import MapView from 'react-native-maps';
+
 class Paramap extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+      <View style ={styles.container}>
+          <MapView
+              style={styles.map}
+              region={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.0121,
+              }}
+              >
+          </MapView>
       </View>
     );
   }
@@ -33,21 +36,22 @@ class Paramap extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 400,
+    width: 400,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
-
 AppRegistry.registerComponent('Paramap', () => Paramap);
