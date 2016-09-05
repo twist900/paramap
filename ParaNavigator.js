@@ -4,25 +4,32 @@ import {
   StyleSheet
 } from 'react-native';
 import AnimatedViewsContainer from './AnimatedViewsContainer';
+import PlaceScreenContainer from './PlaceScreenContainer';
 
 export default class ParaNavigator extends React.Component{
   constructor(props){
     super(props);
   }
 
-  renderScene(route, nav){
-    switch(route){
-      default: return ( <AnimatedViewsContainer />)
+  renderScene(route, navigator){
+    switch(route.name){
+      case 'placeDetailView':
+        return (
+          <PlaceScreenContainer navigator={navigator} />
+        );
+      default:
+        return (
+          <AnimatedViewsContainer navigator={navigator} />
+        )
     }
   }
   render(){
     return (
       <Navigator
-        initialRoute={{ name: 'map' }}
-        ref={(nav) => this.nav = nav}
-        renderScene={this.renderScene.bind(this)}
+        initialRoute={{ name: 'map', index: 0}}
+        ref="navigator"
+        renderScene={this.renderScene}
       />
-
-      );
+    );
   }
 }

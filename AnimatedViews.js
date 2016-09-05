@@ -92,11 +92,12 @@ export default class  AnimatedViews extends React.Component{
     let markers = places.map( (place) => {
           return ({
             id: place.place_id,
-            amount: 199,
+            name: place.name,
             coordinate: {
               latitude: place.geometry.location.lat,
               longitude: place.geometry.location.lng,
             },
+            place_id: place.place_id
           });
         });
     return markers;
@@ -334,6 +335,7 @@ export default class  AnimatedViews extends React.Component{
     } = this.state;
 
     return (
+
       <View style={styles.container}>
         <PanController
           style={styles.container}
@@ -372,7 +374,7 @@ export default class  AnimatedViews extends React.Component{
                         { scale: markerScale },
                       ],
                     }}
-                    amount={marker.amount}
+                    name={marker.name}
                     selected={selected}
                   />
                 </MapView.Marker>
@@ -400,6 +402,15 @@ export default class  AnimatedViews extends React.Component{
                     ],
                   }]}
                 >
+
+                <TouchableOpacity
+                  onPress={ () => this.props.onPlaceClick(marker.place_id) }
+                  style={styles.button}>
+                 <Text>
+                    {marker.name}
+                  </Text>
+                </TouchableOpacity>
+
                 </Animated.View>
               );
             })}
@@ -411,6 +422,7 @@ export default class  AnimatedViews extends React.Component{
 }
 
 var styles = StyleSheet.create({
+
   container: {
     position: 'absolute',
     top: 0,
@@ -443,6 +455,15 @@ var styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 3,
     borderColor: '#000',
+  },
+  button: {
+    height: 60,
+    borderColor: '#05A5D1',
+    borderWidth: 2,
+    backgroundColor: '#333',
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

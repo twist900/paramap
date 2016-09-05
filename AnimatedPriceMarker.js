@@ -9,7 +9,7 @@ import {
   Animated
 } from 'react-native';
 
-const PriceMarker = ({ amount, selected, style }) => {
+const PriceMarker = ({ name, selected, style }) => {
 
   var background = selected.interpolate({
     inputRange: [0, 1],
@@ -28,8 +28,7 @@ const PriceMarker = ({ amount, selected, style }) => {
           borderColor: border,
         }]}
         >
-        <Text style={styles.dollar}>$</Text>
-        <Text style={styles.amount}>{amount}</Text>
+        <Text style={styles.amount}>{name}</Text>
       </Animated.View>
       <Animated.View style={[styles.arrowBorder, {
           borderTopColor: border,
@@ -43,7 +42,7 @@ const PriceMarker = ({ amount, selected, style }) => {
 
 
 PriceMarker.propTypes = {
-  amount: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

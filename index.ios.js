@@ -14,7 +14,8 @@ import {
   setCurrentPosition
  } from './actions'
 
-let store = configureStore()
+let store = configureStore();
+console.log(store.getState());
 
 class Paramap extends React.Component {
   constructor(props){

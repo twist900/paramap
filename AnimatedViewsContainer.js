@@ -1,12 +1,24 @@
 import React from 'react';
 import AnimatedViews from './AnimatedViews';
 import { connect } from 'react-redux';
+import { selectPlace } from './actions';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     places: state.nearbyPlaces
-  }
-};
+  });
 
-const App = connect(mapStateToProps)(AnimatedViews);
-export default App;
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onPlaceClick(placeId){
+    dispatch(selectPlace(placeId));
+    ownProps.navigator.push({
+      name: 'placeDetailView'
+    });
+  }
+})
+
+const AnimatedViewsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnimatedViews);
+
+export default AnimatedViewsContainer;

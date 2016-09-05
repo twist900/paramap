@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
   SELECT_PLACE,
+  SET_PLACE_DETAILS,
   REQUEST_PLACES,
   RECEIVE_PLACES,
   SET_CURRENT_POSITION } from '../actions';
@@ -17,10 +18,12 @@ var initialState = {
 const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 
-function selectedPlaceId(state = '', action){
+function selectedPlace(state = {}, action){
+  console.log(state);
   switch(action.type){
-    case SELECT_PLACE:
-      return action.placeId;
+    case SET_PLACE_DETAILS:
+      let place = Object.assign({}, state, { name: action.place.name});
+      return place;
     default:
       return state;
   }
@@ -41,23 +44,26 @@ function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, a
 
 function nearbyPlaces( state = [ {
       place_id: 0,
-      amount: 99,
+      name: 'Duomo',
       geometry: {
         location: {
           lat: LATITUDE,
           lng: LONGITUDE,
         }
       },
+      place_id: 'rwf2314sfsf'
     },
     {
       place_id: 1,
+      name: 'Kremlin',
       amount: 109,
       geometry: {
         location: {
           lat: LATITUDE,
           lng: LONGITUDE,
         }
-      }
+      },
+      place_id: 'aahjf214dsfcs'
     },
           ], action){
   switch(action.type){
@@ -70,7 +76,7 @@ function nearbyPlaces( state = [ {
 
 const rootReducer = combineReducers({
   currentPosition,
-  selectedPlaceId,
+  selectedPlace,
   nearbyPlaces
 });
 
