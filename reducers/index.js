@@ -4,7 +4,8 @@ import {
   SET_PLACE_DETAILS,
   REQUEST_PLACES,
   RECEIVE_PLACES,
-  SET_CURRENT_POSITION } from '../actions';
+  SET_CURRENT_POSITION,
+} from '../actions';
 
 var initialState = {
   selectedPlaceId: '',
@@ -18,11 +19,10 @@ var initialState = {
 const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 
-function selectedPlace(state = {}, action){
-  console.log(state);
+function selectedPlace(state = null, action){
   switch(action.type){
     case SET_PLACE_DETAILS:
-      let place = Object.assign({}, state, { name: action.place.name});
+      let place = Object.assign({}, state, action.place);
       return place;
     default:
       return state;

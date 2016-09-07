@@ -42,7 +42,7 @@ export const selectPlace = (placeId) => {
     return fetch(url)
            .then(response => response.json())
            .then(json => {
-            dispatch(setPlaceDetails(json.result))
+              dispatch(setPlaceDetails(json.result))
            })
   };
 };
