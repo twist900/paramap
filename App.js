@@ -6,6 +6,17 @@ import {
 } from 'react-native';
 import ParaNavigator from './ParaNavigator';
 import LoginScreen from './LoginScreen';
+import * as firebase from 'firebase';
+
+var firebaseConfig = {
+  apiKey: "AIzaSyDt78T31-TosjoL5OezCZygZ6DOrtukiy8",
+  authDomain: "paramap-141614.firebaseapp.com",
+  databaseURL: "https://paramap-141614.firebaseio.com",
+  storageBucket: "paramap-141614.appspot.com",
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+
 class App extends React.Component{
   constructor(props){
     super(props);
