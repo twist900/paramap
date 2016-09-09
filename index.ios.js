@@ -10,11 +10,13 @@ import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from './store/configureStore';
 import {
-  fetchNearbyPlaces,
+  getAuthState,
   setCurrentPosition
  } from './actions'
 
 let store = configureStore();
+store.dispatch(getAuthState());
+
 console.log(store.getState());
 
 class Paramap extends React.Component {

@@ -1,10 +1,11 @@
 import Config from 'react-native-config';
-
+import { AccessToken } from 'react-native-fbsdk';
 export const REQUEST_PLACES = 'REQUEST_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
 export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
+export const SET_AUTH_STATE = 'SET_AUTH_STATE';
 
 export const requestPlaces = () => ({
     type: REQUEST_PLACES,
@@ -53,3 +54,18 @@ export const setPlaceDetails = (place) => {
     place: place
   }
 }
+
+export const getAuthState = () => {
+  return dispatch => {
+    const token = AccessToken.getCurrentAccessToken();
+    return dispatch({
+      type: SET_AUTH_STATE,
+      isAuthenticated: token != null
+    })
+  }
+}
+
+export const setAuthState = (isAuthenticated) => ({
+  type: SET_AUTH_STATE,
+  isAuthenticated
+})

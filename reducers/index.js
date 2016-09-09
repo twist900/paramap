@@ -6,7 +6,7 @@ import {
   RECEIVE_PLACES,
   SET_CURRENT_POSITION,
 } from '../actions';
-import user from './user';
+import { user, isAuthenticated } from './user';
 
 var initialState = {
   selectedPlaceId: '',
@@ -79,7 +79,8 @@ const rootReducer = combineReducers({
   currentPosition,
   selectedPlace,
   nearbyPlaces,
-  user
+  user,
+  isAuthenticated
 });
 
 export default rootReducer;

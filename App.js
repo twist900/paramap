@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import ParaNavigator from './ParaNavigator';
 import LoginScreen from './LoginScreen';
+import { getAuthState } from './actions';
 import * as firebase from 'firebase';
 
 var firebaseConfig = {
@@ -41,9 +42,8 @@ var styles = StyleSheet.create({
   }
 })
 
-
 const mapPropsToState = (state) => ({
-  isLoggedIn: state.user.isLoggedIn || state.user.hasSkippedLogin
+  isLoggedIn: state.isAuthenticated || state.user.hasSkippedLogin
 });
 
 ;

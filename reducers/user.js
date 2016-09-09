@@ -1,6 +1,7 @@
 import {
   LOGGED_IN,
-  SKIPPED_LOGIN
+  SKIPPED_LOGIN,
+  SET_AUTH_STATE
 } from '../actions';
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
   hasSkippedLogin: false,
 }
 
-export default function user(state = initialState, action){
+export function user(state = initialState, action){
   switch(action.type){
     case LOGGED_IN:
       return {
@@ -25,3 +26,11 @@ export default function user(state = initialState, action){
   }
 }
 
+export function isAuthenticated(state = false, action){
+  switch(action.type){
+    case SET_AUTH_STATE:
+      return action.isAuthenticated;
+    default:
+      return state;
+  }
+}
