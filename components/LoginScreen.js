@@ -61,12 +61,14 @@ export default class LoginScreen extends React.Component{
   render(){
     return (
       <Image
-        source={require('./img/login_background.jpg')}
+        source={require('../img/login_background.jpg')}
         style={styles.container}
       >
         <StatusBar
-          backgroundColor="rgba(0, 0, 0, 0.1)"
-          barStyle="light-content" />
+          translucent={true}
+          backgroundColor="rgba(0, 0, 0, 0.2)"
+          barStyle="light-content"
+          style={style.statusBar} />
         <TouchableOpacity
           accessabilityLabel="Skip Login"
           accessabilityTrait="button"
@@ -74,7 +76,7 @@ export default class LoginScreen extends React.Component{
           onPress={() => this.props.skipLogin()}
         >
           <Image
-            source={require('./img/x.png')}
+            source={require('../img/x.png')}
           />
         </TouchableOpacity>
         <Animated.View style={[styles.section, {opacity: this.state.fadeAnim}]}>
@@ -103,6 +105,9 @@ var styles = StyleSheet.create({
     padding: 26,
     width: undefined,
     height: undefined,
+  },
+  statusBar: {
+    paddingBottom: 20,
   },
   section: {
     flex: 1,

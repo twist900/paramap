@@ -4,9 +4,9 @@ import {
   View,
   StyleSheet
 } from 'react-native';
-import ParaNavigator from './ParaNavigator';
-import LoginScreen from './LoginScreen';
-import { getAuthState } from './actions';
+import ParaNavigator from '../components/ParaNavigator';
+import LoginScreen from '../components/LoginScreen';
+import { getAuthState } from '../actions';
 import * as firebase from 'firebase';
 
 var firebaseConfig = {

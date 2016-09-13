@@ -6,6 +6,7 @@ export const SELECT_PLACE = 'SELECT_PLACE';
 export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
 export const SET_AUTH_STATE = 'SET_AUTH_STATE';
+import * as firebase from 'firebase'
 
 export const requestPlaces = () => ({
     type: REQUEST_PLACES,
@@ -43,8 +44,15 @@ export const selectPlace = (placeId) => {
     return fetch(url)
            .then(response => response.json())
            .then(json => {
-              dispatch(setPlaceDetails(json.result))
-           })
+              const ref = firebase.database().ref().child('ratings').child(placeId);
+              ref.on("value", (snapshot) => {
+                console.log(snapshot.val());
+                dispatch(setPlaceDetails(json.result))
+              }, (errorObject) => {
+                console.log("The read failed: " + errorObject.code);
+              });
+
+           });
   };
 };
 

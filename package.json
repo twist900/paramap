@@ -13,6 +13,8 @@
     "react-native-fbsdk": "^0.3.0",
     "react-native-gallery": "0.0.17",
     "react-native-maps": "^0.7.1",
+    "react-native-star-rating": "^1.0.6",
+    "react-native-swiper": "^1.4.11",
     "react-native-vector-icons": "^2.1.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",

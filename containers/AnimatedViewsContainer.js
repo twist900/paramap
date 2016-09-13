@@ -1,7 +1,7 @@
 import React from 'react';
-import AnimatedViews from './AnimatedViews';
+import AnimatedViews from '../components/AnimatedViews';
 import { connect } from 'react-redux';
-import { selectPlace } from './actions';
+import { selectPlace } from '../actions';
 
 const mapStateToProps = (state) => ({
     places: state.nearbyPlaces

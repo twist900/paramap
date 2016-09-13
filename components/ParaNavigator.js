@@ -3,8 +3,8 @@ import {
   Navigator,
   StyleSheet
 } from 'react-native';
-import AnimatedViewsContainer from './AnimatedViewsContainer';
-import PlaceScreenContainer from './PlaceScreenContainer';
+import AnimatedViewsContainer from '../containers/AnimatedViewsContainer';
+import PlaceScreenContainer from '../containers/PlaceScreenContainer';
 
 export default class ParaNavigator extends React.Component{
   constructor(props){

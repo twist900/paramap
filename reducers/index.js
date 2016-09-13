@@ -21,6 +21,7 @@ const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 
 function selectedPlace(state = null, action){
+  console.log(state);
   switch(action.type){
     case SET_PLACE_DETAILS:
       let place = Object.assign({}, state, action.place);
