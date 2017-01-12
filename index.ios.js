@@ -4,41 +4,49 @@
  * @flow
  */
 
-import React from 'react';
-import { AppRegistry } from 'react-native';
-import { Provider } from 'react-redux';
-import App from './containers/App';
-import configureStore from './store/configureStore';
+import React, { Component } from 'react';
 import {
-  getAuthState,
-  setCurrentPosition
- } from './actions'
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import { Provider } from 'react-redux';
 
-let store = configureStore();
-store.dispatch(getAuthState());
+import App from './src/containers/App';
+import configureStore from './src/store/configureStore';
 
-console.log(store.getState());
+const store = configureStore();
 
-class Paramap extends React.Component {
-  constructor(props){
-    super(props);
-    this.setCurrentPosition();
-  }
-
-  setCurrentPosition(){
-    navigator.geolocation.getCurrentPosition(
-      (initialPosition) => store.dispatch(setCurrentPosition(initialPosition.coords)) ,
-      (error) => alert(error.message)
-    );
-  }
-
+export default class paramap extends Component {
   render() {
+    console.log(store.getState());
+
     return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
 
-AppRegistry.registerComponent('Paramap', () => Paramap);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
+
+AppRegistry.registerComponent('paramap', () => paramap);
