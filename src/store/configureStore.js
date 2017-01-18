@@ -5,6 +5,8 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
 
 export default function configureStore(){
+  AsyncStorage.clear();   // REMOVE THIS LINE TO PERSIST STATE
+
   const store = createStore(
     rootReducer,
     applyMiddleware(

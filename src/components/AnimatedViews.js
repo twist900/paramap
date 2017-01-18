@@ -8,11 +8,17 @@ import {
   TouchableOpacity,
   Animated,
   Platform,
+  Image,
+  ActivityIndicator
 } from 'react-native';
+import Config from 'react-native-config';
+import { BlurView } from 'react-native-blur';
+import StarRating from 'react-native-star-rating';
 
 import MapView from 'react-native-maps';
 import PanController from './PanController';
 import PriceMarker from './AnimatedPriceMarker';
+import _ from 'lodash';
 
 var screen = Dimensions.get('window');
 
@@ -26,7 +32,7 @@ var ITEM_SPACING = 10;
 var ITEM_PREVIEW = 10;
 var ITEM_WIDTH = screen.width - 2 * ITEM_SPACING - 2 * ITEM_PREVIEW;
 var SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
-var ITEM_PREVIEW_HEIGHT = 150;
+var ITEM_PREVIEW_HEIGHT = 200;
 var SCALE_END = screen.width / ITEM_WIDTH;
 var BREAKPOINT1 = 246;
 var BREAKPOINT2 = 350;
@@ -115,7 +121,7 @@ export default class  AnimatedViews extends React.Component{
     var { region, panX, panY, scrollX } = this.state;
 
     panX.addListener(this.onPanXChange.bind(this));
-    panY.addListener(this.onPanYChange.bind(this));
+    // panY.addListener(this.onPanYChange.bind(this));
 
     region.stopAnimation();
     region.timing({
@@ -232,7 +238,7 @@ export default class  AnimatedViews extends React.Component{
     var { region, panX, panY, scrollX, markers } = this.state;
 
     panX.addListener(this.onPanXChange.bind(this));
-    panY.addListener(this.onPanYChange.bind(this));
+    // panY.addListener(this.onPanYChange.bind(this));
 
     region.stopAnimation();
     region.timing({
@@ -324,6 +330,44 @@ export default class  AnimatedViews extends React.Component{
     //this.state.region.setValue(region);
   }
 
+  renderPlaceCard(marker) {
+    const place = _.find(this.props.places, p => p.place_id == marker.place_id);
+    let url = "'../../img/placeholder.png'";
+    if(place.photos && place.photos.length > 0) {
+      const image = place.photos[0];
+      url = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
+    }
+
+    return (
+      <TouchableOpacity
+        onPress={ () => this.props.onPlaceClick(marker.place_id)}
+        style={{ flex: 1 }}
+      >
+        <Image
+          style={styles.placeImage}
+          source={{uri: url}}
+          resizeMode='cover'
+          defaultSource={require('../../img/placeholder.png')}
+        >
+          <BlurView blurType="dark" blurAmount={0.5} style={styles.blur}>
+            <Text style={styles.placeCardTitle}>{marker.name}</Text>
+            <StarRating
+              selectedStar={(rating)=> {}}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              starColor='#D3E02E'
+              starSize={20}
+              maxStars={5}
+              rating={3.5} />
+          </BlurView>
+        </Image>
+      </TouchableOpacity>
+
+    );
+  }
+
   render(){
     const {
       panX,
@@ -335,7 +379,6 @@ export default class  AnimatedViews extends React.Component{
     } = this.state;
 
     return (
-
       <View style={styles.container}>
         <PanController
           style={styles.container}
@@ -345,7 +388,6 @@ export default class  AnimatedViews extends React.Component{
           snapSpacingX={SNAP_WIDTH}
           yBounds={[-1 * screen.height, 0]}
           xBounds={[-screen.width * (markers.length-1), 0]}
-          panY={panY}
           panX={panX}
           onStartShouldSetPanResponder={this.onStartShouldSetPanResponder.bind(this)}
           onMoveShouldSetPanResponder={this.onMoveShouldSetPanResponder.bind(this)}
@@ -396,20 +438,20 @@ export default class  AnimatedViews extends React.Component{
                   style={[styles.item, {
                     opacity,
                     transform: [
-                      { translateY },
                       { translateX },
                       { scale },
                     ],
                   }]}
                 >
 
-                <TouchableOpacity
+                { this.renderPlaceCard(marker) }
+                {/*<TouchableOpacity
                   onPress={ () => this.props.onPlaceClick(marker.place_id) }
                   style={styles.button}>
                  <Text>
                     {marker.name}
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
 
                 </Animated.View>
               );
@@ -435,7 +477,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: ITEM_SPACING / 2 + ITEM_PREVIEW,
     position: 'absolute',
-    top: screen.height - ITEM_PREVIEW_HEIGHT - 64,
+    top: screen.height - ITEM_PREVIEW_HEIGHT,
     paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     paddingTop: !ANDROID ? 0 : screen.height - ITEM_PREVIEW_HEIGHT - 64,
   },
@@ -449,8 +491,8 @@ var styles = StyleSheet.create({
   },
   item: {
     width: ITEM_WIDTH,
-    height: screen.height + 2 * ITEM_PREVIEW_HEIGHT,
-    backgroundColor: 'red',
+    height: ITEM_PREVIEW_HEIGHT,
+    backgroundColor: 'grey',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
     borderRadius: 3,
@@ -465,8 +507,25 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  placeImage: {
+    flex:1,
+    width: null,
+    height: null
+  },
+  blur: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  placeCardTitle: {
+    color: 'white',
+    fontSize: 21
+  }
+
 });
 
 AnimatedViews.propTypes = {
   places: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  isLoading: React.PropTypes.bool
 }

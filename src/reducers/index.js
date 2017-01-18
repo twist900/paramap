@@ -5,7 +5,8 @@ import {
 	SET_PLACE_DETAILS,
 	REQUEST_PLACES,
 	RECEIVE_PLACES,
-	SET_CURRENT_POSITION
+	SET_CURRENT_POSITION,
+  TOGGLE_LOADING
 } from '../actions';
 import{ user, isAuthenticated } from './user';
 
@@ -32,7 +33,7 @@ function selectedPlace(state = null, action) {
 }
 
 function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, action) {
-	switch(action.type) {
+  switch(action.type) {
 		case SET_CURRENT_POSITION:
 			let position = Object.assign({}, state, {
 				latitude: action.position.latitude,
@@ -44,33 +45,19 @@ function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, a
 	}
 }
 
-function nearbyPlaces( state =
-  [{
-    place_id: 0,
-    name: 'Duomo',
-    geometry: {
-      location: {
-        lat: LATITUDE,
-        lng: LONGITUDE,
-      }
-    },
-    place_id: 'rwf2314sfsf'
-  },
-  {
-    place_id: 1,
-    name: 'Kremlin',
-    amount: 109,
-    geometry: {
-      location: {
-        lat: LATITUDE,
-        lng: LONGITUDE,
-      }
-    },
-    place_id: 'aahjf214dsfcs'
-  },], action){
+function nearbyPlaces( state = initialState.nearbyPlaces, action){
   switch(action.type){
     case RECEIVE_PLACES:
       return action.places;
+    default:
+      return state;
+  }
+}
+
+function isLoading( state = false, action) {
+  switch(action.type) {
+    case TOGGLE_LOADING:
+      return action.isLoading;
     default:
       return state;
   }
@@ -81,7 +68,8 @@ const rootReducer = combineReducers({
   selectedPlace,
   nearbyPlaces,
   user,
-  isAuthenticated
+  isAuthenticated,
+  isLoading
 });
 
 export default rootReducer;

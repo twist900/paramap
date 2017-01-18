@@ -43,10 +43,9 @@ export default class PanController extends React.Component {
           if (this.props.onPanResponderGrant) {
             this.props.onPanResponderGrant(...args);
           }
-          var { panX, panY, horizontal, vertical, xMode, yMode } = this.props;
+          var { panX, horizontal, vertical, xMode, yMode } = this.props;
 
           this.handleResponderGrant(panX, xMode);
-          this.handleResponderGrant(panY, yMode);
 
           this._direction = horizontal && !vertical ? 'x' : (vertical && !horizontal ? 'y' : null);
         },
@@ -54,7 +53,6 @@ export default class PanController extends React.Component {
         onPanResponderMove: (_, { dx, dy, x0, y0 }) => {
           var {
             panX,
-            panY,
             xBounds,
             yBounds,
             overshootX,
@@ -87,18 +85,11 @@ export default class PanController extends React.Component {
 
             this.handleResponderMove(panX, dx, xMin, xMax, overshootX);
           }
-
-          if (vertical && (!lockDirection || dir === 'y')) {
-            var [yMin, yMax] = yBounds;
-
-            this.handleResponderMove(panY, dy, yMin, yMax, overshootY);
-          }
         },
 
         onPanResponderRelease: (_, { vx, vy, dx, dy }) => {
           var {
             panX,
-            panY,
             xBounds,
             yBounds,
             overshootX,
@@ -127,15 +118,6 @@ export default class PanController extends React.Component {
             }
             !cancel && this.handleResponderRelease(panX, xMin, xMax, vx, overshootX, xMode, snapSpacingX);
           }
-
-          if (!cancel && vertical && (!lockDirection || dir === 'y')) {
-            var [yMin, yMax] = yBounds;
-            if (this.props.onReleaseY) {
-              cancel = false === this.props.onReleaseY({ vx, vy, dx, dy });
-            }
-            !cancel && this.handleResponderRelease(panY, yMin, yMax, vy, overshootY, yMode, snapSpacingY);
-          }
-
           this._direction = horizontal && !vertical ? 'x' : (vertical && !horizontal ? 'y' : null);
         }
       });
@@ -389,7 +371,6 @@ PanController.propTypes = {
 
   // Animated Values
   panX: AnimatedPropType,
-  panY: AnimatedPropType,
 
   // Animation Config
   overshootSpringConfig: PropTypes.any,
@@ -415,7 +396,6 @@ PanController.defaultProps = {
   overshootX: "spring",
   overshootY: "spring",
   panX: new Animated.Value(0),
-  panY: new Animated.Value(0),
   xBounds: [-Infinity, Infinity],
   yBounds: [-Infinity, Infinity],
   yMode: "decay",

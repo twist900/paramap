@@ -13,15 +13,12 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux';
 
-import App from './src/containers/App';
+import App from './src/App';
 import configureStore from './src/store/configureStore';
-
 const store = configureStore();
 
 export default class paramap extends Component {
   render() {
-    console.log(store.getState());
-
     return (
       <Provider store={store}>
         <App />
