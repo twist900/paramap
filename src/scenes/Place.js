@@ -1,5 +1,5 @@
 import react from 'react';
-import PlaceScreen from '../components/PlaceScreen';
+import PlaceScreen from '../components/Place';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
