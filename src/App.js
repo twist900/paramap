@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 
-import { setCurrentPosition, toggleLoading, setSkippedLogin } from './actions';
+import { setCurrentPosition, toggleLoading, setSkippedLogin, setAuthState } from './actions';
 
 import LoginScreen from './components/LoginScreen';
 // import ParaNavigator from './components/Navigator';
@@ -21,6 +21,7 @@ class App extends Component {
 
   componentWillMount() {
     this.setCurrentPosition();
+    this.props.dispatch(setAuthState());
 
   }
 
@@ -36,7 +37,7 @@ class App extends Component {
 	}
 
 	render() {
-		if(!this.props.hasSkippedLogin) {
+		if(this.props.showLoginScreen) {
 			return <LoginScreen skipLogin={this.skipLogin.bind(this)}/>
 		}
 
@@ -71,8 +72,7 @@ var styles = StyleSheet.create({
 })
 
 const mapPropsToState = (state) => ({
-  isLoggedIn: state.isAuthenticated || state.user.hasSkippedLogin,
-  hasSkippedLogin: state.user.hasSkippedLogin,
+  showLoginScreen: !state.isAuthenticated && !state.user.hasSkippedLogin,
   isLoading: state.isLoading,
   nearbyPlaces: state.nearbyPlaces
 });

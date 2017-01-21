@@ -17,7 +17,8 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import * as firebase from 'firebase'
+import Firestack from 'react-native-firestack'
+const firestack = new Firestack();
 
 export default class LoginScreen extends Component{
   constructor(props){
@@ -31,8 +32,8 @@ export default class LoginScreen extends Component{
   }
 
   loginFacebook () {
-    const auth = firebase.auth();
-    const provider = firebase.auth.FacebookAuthProvider;
+    const provider = firestack.auth.FacebookAuthProvider;
+    firestack.auth.signOut();
     LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
       .then((result) => {
         if (result.isCancelled) {
@@ -40,12 +41,12 @@ export default class LoginScreen extends Component{
         } else {
           AccessToken.getCurrentAccessToken()
             .then(accessTokenData => {
-              const credential = provider.credential(accessTokenData.accessToken);
-              return auth.signInWithCredential(credential);
-            })
-            .then(credData => {
-              console.log(credData)
-              // this.props.mapScreen()
+              firestack.auth.signInWithProvider('facebook', accessTokenData.accessToken, '')
+              .then(credentials => {
+                console.log(credentials.user)
+              }).catch( err => {
+                console.log(err)
+              })
             })
             .catch(err => {
               window.alert('Login cancelled')

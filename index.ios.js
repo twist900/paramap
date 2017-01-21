@@ -12,20 +12,10 @@ import {
   View
 } from 'react-native';
 import { Provider } from 'react-redux';
-import * as firebase from 'firebase';
 
 import App from './src/App';
 import configureStore from './src/store/configureStore';
 const store = configureStore();
-
-var firebaseConfig = {
-  apiKey: "AIzaSyDt78T31-TosjoL5OezCZygZ6DOrtukiy8",
-  authDomain: "paramap-141614.firebaseapp.com",
-  databaseURL: "https://paramap-141614.firebaseio.com",
-  storageBucket: "paramap-141614.appspot.com",
-  messagingSenderId: "999427862566"
-};
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class paramap extends Component {
   render() {

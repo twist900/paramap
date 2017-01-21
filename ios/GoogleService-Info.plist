@@ -7,19 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>999427862566-onvni9aroehlv2fbc50gdsc3padosa2g.apps.googleusercontent.com</string>
+	<string>198786189733-agtqmbbqkd04tm1tbobiq6c5tm77ar4v.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.999427862566-onvni9aroehlv2fbc50gdsc3padosa2g</string>
+	<string>com.googleusercontent.apps.198786189733-agtqmbbqkd04tm1tbobiq6c5tm77ar4v</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDtEMBbLQqRzB8zZeR1lW5mwYH5hKk-sLE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>999427862566</string>
+	<string>198786189733</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>org.reactjs.native.example.paramap</string>
 	<key>PROJECT_ID</key>
-	<string>paramap-141614</string>
+	<string>paramap-ios</string>
 	<key>STORAGE_BUCKET</key>
-	<string>paramap-141614.appspot.com</string>
+	<string>paramap-ios.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:999427862566:ios:41dca477b4e3fa27</string>
+	<string>1:198786189733:ios:41dca477b4e3fa27</string>
 	<key>DATABASE_URL</key>
-	<string>https://paramap-141614.firebaseio.com</string>
+	<string>https://paramap-ios.firebaseio.com</string>
 </dict>
 </plist>

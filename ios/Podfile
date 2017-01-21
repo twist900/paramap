@@ -27,6 +27,18 @@ target 'paramap' do
       'Share',
     ], :path => '../node_modules/react-native-fbsdk/iOS'
 
+  [
+    'Firebase',
+    'Firebase/Core',
+    'Firebase/Auth',
+    'Firebase/Storage',
+    'Firebase/Database',
+    'Firebase/RemoteConfig',
+    'Firebase/Messaging'
+  ].each do |lib|
+    pod lib
+  end
+
 # when not using frameworks  we can do this instead of including the source files in our project (1/4):
 #  pod 'react-native-maps', path: '../../'
 #  pod 'react-native-google-maps', path: '../../'  # <~~ if you need GoogleMaps support on iOS

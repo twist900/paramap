@@ -10,6 +10,7 @@ export const SKIPPED_LOGIN = 'SKIPPED_LOGIN';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 
 import * as firebase from 'firebase'
+import { AccessToken } from 'react-native-fbsdk';
 
 export const toggleLoading = (isLoading) => ({
 	type: TOGGLE_LOADING,
@@ -91,7 +92,7 @@ export const setSkippedLogin = () => ({
 })
 
 
-export const getAuthState = () => {
+export const setAuthState = () => {
   return dispatch => {
     const token = AccessToken.getCurrentAccessToken();
     return dispatch({
@@ -100,9 +101,3 @@ export const getAuthState = () => {
     })
   }
 }
-
-// export const setAuthState = (isAuthenticated) => ({
-//   type: SET_AUTH_STATE,
-//   isAuthenticated
-// })
-

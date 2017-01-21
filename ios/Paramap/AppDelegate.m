@@ -14,10 +14,12 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @import GoogleMaps;
+@import Firebase;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   [GMSServices provideAPIKey:@"AIzaSyCRyy893TKCHbYB6SVvLc499n-7M6dyE2s"];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
