@@ -20,7 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Firestack from 'react-native-firestack'
 const firestack = new Firestack();
 
-export default class LoginScreen extends Component{
+export default class Login extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -31,33 +31,33 @@ export default class LoginScreen extends Component{
     Animated.timing(this.state.fadeAnim, {toValue: 1}).start();
   }
 
-  loginFacebook () {
-    const provider = firestack.auth.FacebookAuthProvider;
-    firestack.auth.signOut();
-    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
-      .then((result) => {
-        if (result.isCancelled) {
-          window.alert('Login cancelled')
-        } else {
-          AccessToken.getCurrentAccessToken()
-            .then(accessTokenData => {
-              firestack.auth.signInWithProvider('facebook', accessTokenData.accessToken, '')
-              .then(credentials => {
-                console.log(credentials.user)
-              }).catch( err => {
-                console.log(err)
-              })
-            })
-            .catch(err => {
-              window.alert('Login cancelled')
-              console.log(err)
-            })
-        }
-      },
-      (error) => {
-        window.alert(`Login fail with error: ${error}`)
-      })
-  }
+  // loginFacebook () {
+  //   const provider = firestack.auth.FacebookAuthProvider;
+  //   firestack.auth.signOut();
+  //   LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
+  //     .then((result) => {
+  //       if (result.isCancelled) {
+  //         window.alert('Login cancelled')
+  //       } else {
+  //         AccessToken.getCurrentAccessToken()
+  //           .then(accessTokenData => {
+  //             firestack.auth.signInWithProvider('facebook', accessTokenData.accessToken, '')
+  //             .then(credentials => {
+  //               console.log(credentials.user)
+  //             }).catch( err => {
+  //               console.log(err)
+  //             })
+  //           })
+  //           .catch(err => {
+  //             window.alert('Login cancelled')
+  //             console.log(err)
+  //           })
+  //       }
+  //     },
+  //     (error) => {
+  //       window.alert(`Login fail with error: ${error}`)
+  //     })
+  // }
 
   render(){
     return (
@@ -74,7 +74,7 @@ export default class LoginScreen extends Component{
           accessabilityLabel="Skip Login"
           accessabilityTrait="button"
           style={styles.skip}
-          onPress={() => this.props.skipLogin()}
+          onPress={() => this.props.onSkipLogin()}
         >
           <Image
             source={require('../../img/x.png')}
@@ -87,7 +87,7 @@ export default class LoginScreen extends Component{
 
 
           <View style={[styles.loginButtonWrapper]} >
-            <Icon.Button name='facebook' size={30} style={styles.facebookButton} backgroundColor='#3b5998' onPress={() => {this.loginFacebook()}}>
+            <Icon.Button name='facebook' size={30} style={styles.facebookButton} backgroundColor='#3b5998' onPress={() => {this.props.onLoginPressed()}}>
               <Text style={styles.facebookButtonText}>Login With Facebook</Text>
             </Icon.Button>
           </View>
@@ -97,8 +97,9 @@ export default class LoginScreen extends Component{
 }
 const width = Dimensions.get('window').width;
 
-LoginScreen.propTypes = {
-  skipLogin: PropTypes.func.isRequired
+Login.propTypes = {
+  onSkipLogin: PropTypes.func.isRequired,
+  onLoginPressed: PropTypes.func.isRequired
 }
 
 var styles = StyleSheet.create({

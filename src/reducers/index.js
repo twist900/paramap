@@ -8,7 +8,7 @@ import {
 	SET_CURRENT_POSITION,
   TOGGLE_LOADING
 } from '../actions';
-import{ user, isAuthenticated } from './user';
+import { user } from './user';
 
 var initialState = {
 	selectedPlaceId: '',
@@ -67,9 +67,8 @@ const rootReducer = combineReducers({
   currentPosition,
   selectedPlace,
   nearbyPlaces,
-  user,
-  isAuthenticated,
-  isLoading
+  isLoading,
+  user
 });
 
 export default rootReducer;

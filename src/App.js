@@ -9,10 +9,13 @@ import { Scene, Router } from 'react-native-router-flux';
 
 import { setCurrentPosition, toggleLoading, setSkippedLogin, setAuthState } from './actions';
 
-import LoginScreen from './components/LoginScreen';
-// import ParaNavigator from './components/Navigator';
+import Login from './scenes/Login';
 import MapList from './scenes/MapList';
 import Place from './scenes/Place';
+
+import {
+  AccessToken
+} from 'react-native-fbsdk';
 
 class App extends Component {
 	constructor(props) {
@@ -21,8 +24,6 @@ class App extends Component {
 
   componentWillMount() {
     this.setCurrentPosition();
-    this.props.dispatch(setAuthState());
-
   }
 
   setCurrentPosition() {
@@ -32,13 +33,9 @@ class App extends Component {
     );
   }
 
-	skipLogin() {
-	  this.props.dispatch(setSkippedLogin());
-	}
-
 	render() {
 		if(this.props.showLoginScreen) {
-			return <LoginScreen skipLogin={this.skipLogin.bind(this)}/>
+      return <Login />
 		}
 
     if(this.props.isLoading || (this.props.nearbyPlaces.length == 0)){
@@ -72,9 +69,10 @@ var styles = StyleSheet.create({
 })
 
 const mapPropsToState = (state) => ({
-  showLoginScreen: !state.isAuthenticated && !state.user.hasSkippedLogin,
+  showLoginScreen: !state.user.skippedAuth && !state.user.facebookToken,
   isLoading: state.isLoading,
-  nearbyPlaces: state.nearbyPlaces
+  nearbyPlaces: state.nearbyPlaces,
+  user: state.user
 });
 
 // ;

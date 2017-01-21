@@ -5,12 +5,9 @@ export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
 export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
-export const SET_AUTH_STATE = 'SET_AUTH_STATE';
-export const SKIPPED_LOGIN = 'SKIPPED_LOGIN';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 
 import * as firebase from 'firebase'
-import { AccessToken } from 'react-native-fbsdk';
 
 export const toggleLoading = (isLoading) => ({
 	type: TOGGLE_LOADING,
@@ -85,19 +82,19 @@ export const selectPlace = (placeId) => {
 export const setPlaceDetails = (place) => ({
 	type: SET_PLACE_DETAILS,
 	place: place
-})
+});
 
-export const setSkippedLogin = () => ({
-  type: SKIPPED_LOGIN
-})
+import {
+	setSkippedAuth,
+	authSuccess,
+	logout,
+	facebookLogin
+} from './user';
 
+export {
+	setSkippedAuth,
+	authSuccess,
+	logout,
+	facebookLogin
+};
 
-export const setAuthState = () => {
-  return dispatch => {
-    const token = AccessToken.getCurrentAccessToken();
-    return dispatch({
-      type: SET_AUTH_STATE,
-      isAuthenticated: token != null
-    })
-  }
-}

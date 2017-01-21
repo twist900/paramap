@@ -1,35 +1,27 @@
 import {
-	LOGGED_IN,
-	SKIPPED_LOGIN,
-	SET_AUTH_STATE
-} from '../actions';
+	SKIPPED_AUTH,
+	AUTH_SUCCESS
+} from '../actions/user';
 
 const initialState = {
-	isLoggedIn: false,
-	hasSkippedLogin: false
+	skippedAuth: false,
+	authenticating: false,
+	facebookToken: null,
+	facebookProfile: null
 };
 
 export function user(state = initialState, action) {
-	switch(action.type) {
-		case LOGGED_IN:
-			return {
-				isLoggedIn: true,
-				hasSkippedLogin: false
-			};
-		case SKIPPED_LOGIN:
-			return {
-				isLoggedIn: false,
-				hasSkippedLogin: true
-			};
-		default:
-			return state;
-	}
-}
-
-export function isAuthenticated(state = false, action) {
 	switch (action.type) {
-		case SET_AUTH_STATE:
-			return action.isAuthenticated;
+		case AUTH_SUCCESS :
+      return Object.assign({}, state, {
+        authenticating: false,
+        facebookToken: action.facebookToken,
+        facebookProfile: action.facebookProfile,
+		   });
+    case SKIPPED_AUTH:
+    	return Object.assign({}, state, {
+    		skippedAuth: true
+    	});
 		default:
 			return state;
 	}
