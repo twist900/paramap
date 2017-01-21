@@ -1,4 +1,16 @@
 PODS:
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - FBSDKCoreKit (4.18.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.18.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.18.0):
+    - FBSDKCoreKit
   - GoogleMaps (2.1.1):
     - GoogleMaps/Maps (= 2.1.1)
   - GoogleMaps/Base (2.1.1)
@@ -6,6 +18,15 @@ PODS:
     - GoogleMaps/Base
   - React (0.40.0):
     - React/Core (= 0.40.0)
+  - react-native-fbsdk/Core (0.5.0):
+    - FBSDKCoreKit
+    - React
+  - react-native-fbsdk/Login (0.5.0):
+    - FBSDKLoginKit
+    - React
+  - react-native-fbsdk/Share (0.5.0):
+    - FBSDKShareKit
+    - React
   - React/Core (0.40.0):
     - React/cxxreact
     - React/yoga
@@ -39,6 +60,9 @@ PODS:
 
 DEPENDENCIES:
   - GoogleMaps
+  - react-native-fbsdk/Core (from `../node_modules/react-native-fbsdk/iOS`)
+  - react-native-fbsdk/Login (from `../node_modules/react-native-fbsdk/iOS`)
+  - react-native-fbsdk/Share (from `../node_modules/react-native-fbsdk/iOS`)
   - React/Core (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
@@ -55,14 +79,21 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   React:
     :path: ../node_modules/react-native
+  react-native-fbsdk:
+    :path: ../node_modules/react-native-fbsdk/iOS
   RNVectorIcons:
     :path: ../node_modules/react-native-vector-icons
 
 SPEC CHECKSUMS:
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
+  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
+  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
   GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   React: 6dfb2f72edb1d74a800127ae157af038646673ce
+  react-native-fbsdk: b1dcaf67cb1358c893a1378b659623b96e05167a
   RNVectorIcons: d7e2c5eef986d1f594dfd2947df6d6e8093ad1e0
 
-PODFILE CHECKSUM: 11af33879e218ff2090af39d325f1a7f82e92e03
+PODFILE CHECKSUM: d210a76f54a9f0ed67a22b9e3608f7f5c4465258
 
 COCOAPODS: 1.1.1

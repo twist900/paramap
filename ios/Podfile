@@ -1,7 +1,7 @@
 # You Podfile should look similar to this file. React Native currently does not support use_frameworks!
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '8.0'
+platform :ios, '9.2'
 
 target 'paramap' do
   pod 'React', path: '../node_modules/react-native', :subspecs => [
@@ -20,6 +20,12 @@ target 'paramap' do
 
   pod 'GoogleMaps'  # <~~ remove this line if you do not want to support GoogleMaps on iOS
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-fbsdk', :subspecs => [
+      'Core',
+      'Login',
+      'Share',
+    ], :path => '../node_modules/react-native-fbsdk/iOS'
 
 # when not using frameworks  we can do this instead of including the source files in our project (1/4):
 #  pod 'react-native-maps', path: '../../'

@@ -74,6 +74,7 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
   install_resource "../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"
   install_resource "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"
@@ -87,6 +88,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
   install_resource "../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"
   install_resource "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"

@@ -91,15 +91,15 @@ export const setSkippedLogin = () => ({
 })
 
 
-// export const getAuthState = () => {
-//   return dispatch => {
-//     const token = AccessToken.getCurrentAccessToken();
-//     return dispatch({
-//       type: SET_AUTH_STATE,
-//       isAuthenticated: token != null
-//     })
-//   }
-// }
+export const getAuthState = () => {
+  return dispatch => {
+    const token = AccessToken.getCurrentAccessToken();
+    return dispatch({
+      type: SET_AUTH_STATE,
+      isAuthenticated: token != null
+    })
+  }
+}
 
 // export const setAuthState = (isAuthenticated) => ({
 //   type: SET_AUTH_STATE,

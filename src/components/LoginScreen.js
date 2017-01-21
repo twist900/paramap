@@ -10,10 +10,10 @@ import {
   Text
  } from 'react-native';
 
-// import {
-//   LoginManager,
-//   AccessToken
-// } from 'react-native-fbsdk';
+import {
+  LoginManager,
+  AccessToken
+} from 'react-native-fbsdk';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -30,33 +30,33 @@ export default class LoginScreen extends Component{
     Animated.timing(this.state.fadeAnim, {toValue: 1}).start();
   }
 
-  // loginFacebook () {
-  //   const auth = firebase.auth()
-  //   const provider = firebase.auth.FacebookAuthProvider
-  //   LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
-  //     .then((result) => {
-  //       if (result.isCancelled) {
-  //         window.alert('Login cancelled')
-  //       } else {
-  //         AccessToken.getCurrentAccessToken()
-  //           .then(accessTokenData => {
-  //             const credential = provider.credential(accessTokenData.accessToken)
-  //             return auth.signInWithCredential(credential)
-  //           })
-  //           .then(credData => {
-  //             console.log(credData)
-  //             // this.props.mapScreen()
-  //           })
-  //           .catch(err => {
-  //             window.alert('Login cancelled')
-  //             console.log(err)
-  //           })
-  //       }
-  //     },
-  //     (error) => {
-  //       window.alert(`Login fail with error: ${error}`)
-  //     })
-  // }
+  loginFacebook () {
+    const auth = firebase.auth();
+    const provider = firebase.auth.FacebookAuthProvider;
+    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
+      .then((result) => {
+        if (result.isCancelled) {
+          window.alert('Login cancelled')
+        } else {
+          AccessToken.getCurrentAccessToken()
+            .then(accessTokenData => {
+              const credential = provider.credential(accessTokenData.accessToken);
+              return auth.signInWithCredential(credential);
+            })
+            .then(credData => {
+              console.log(credData)
+              // this.props.mapScreen()
+            })
+            .catch(err => {
+              window.alert('Login cancelled')
+              console.log(err)
+            })
+        }
+      },
+      (error) => {
+        window.alert(`Login fail with error: ${error}`)
+      })
+  }
 
   render(){
     return (
@@ -86,7 +86,7 @@ export default class LoginScreen extends Component{
 
 
           <View style={[styles.loginButtonWrapper]} >
-            <Icon.Button name='facebook' size={30} style={styles.facebookButton} backgroundColor='#3b5998' onPress={() => {/*this.loginFacebook()*/}}>
+            <Icon.Button name='facebook' size={30} style={styles.facebookButton} backgroundColor='#3b5998' onPress={() => {this.loginFacebook()}}>
               <Text style={styles.facebookButtonText}>Login With Facebook</Text>
             </Icon.Button>
           </View>

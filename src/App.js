@@ -21,6 +21,7 @@ class App extends Component {
 
   componentWillMount() {
     this.setCurrentPosition();
+
   }
 
   setCurrentPosition() {
@@ -70,9 +71,8 @@ var styles = StyleSheet.create({
 })
 
 const mapPropsToState = (state) => ({
-  // isLoggedIn: state.isAuthenticated || state.user.hasSkippedLogin
-  isLoggedIn: false,
-  hasSkippedLogin: true,
+  isLoggedIn: state.isAuthenticated || state.user.hasSkippedLogin,
+  hasSkippedLogin: state.user.hasSkippedLogin,
   isLoading: state.isLoading,
   nearbyPlaces: state.nearbyPlaces
 });
