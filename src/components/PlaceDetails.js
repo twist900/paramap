@@ -26,8 +26,8 @@ export const border = {
 
 var screen = Dimensions.get('window');
 
-const PlaceDetails = ({ place }) => {
-  if(place == null){
+const PlaceDetails = ({ place, isLoading }) => {
+  if(isLoading){
     return (
         <View style={{
             flex: 1,
@@ -74,7 +74,7 @@ const PlaceDetails = ({ place }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={3.5} />
+              rating={place.ratingRes.entrance} />
           <Text style={styles.ratingText}>Entry</Text>
         </View>
       </View>
@@ -91,7 +91,7 @@ const PlaceDetails = ({ place }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={3.5} />
+              rating={place.ratingRes.bathroom} />
           <Text style={styles.ratingText}>Bathroom</Text>
         </View>
       </View>
@@ -108,7 +108,7 @@ const PlaceDetails = ({ place }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={3.5} />
+              rating={place.ratingRes.parking} />
           <Text style={styles.ratingText}>Parking</Text>
         </View>
       </View>
@@ -116,6 +116,9 @@ const PlaceDetails = ({ place }) => {
   );
 }
 
+PlaceDetails.propTypes = {
+  place: React.PropTypes.object
+}
 var styles = StyleSheet.create({
   container: {
     flex: 1

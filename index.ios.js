@@ -12,10 +12,12 @@ import {
   View
 } from 'react-native';
 import { Provider } from 'react-redux';
+import Config from 'react-native-config';
 
 import App from './src/App';
 import configureStore from './src/store/configureStore';
 const store = configureStore();
+
 
 export default class paramap extends Component {
   render() {

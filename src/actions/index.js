@@ -7,7 +7,10 @@ export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import { getPlaceRatings, getPlaceReviews } from '../services/firebase';
+import { getPlaceDetails } from '../services/google';
+import { calcRatings } from '../utils/ratings';
 
 export const toggleLoading = (isLoading) => ({
 	type: TOGGLE_LOADING,
@@ -59,25 +62,25 @@ export const fetchNearbyPlaces = (position) => {
 
 export const selectPlace = (placeId) => {
 	return dispatch => {
-	  if(Config.USE_STUBBED_DATA == 'true') {
-		  dispatch(setPlaceDetails(require('../../data/placeDetails.js').default))
-		} else {
-	    var url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=${Config.GOOGLE_MAPS_API_KEY}`
-	    return fetch(url)
-	           .then(response => response.json())
-	           .then(json => {
-	              const ref = firebase.database().ref().child('ratings').child(placeId);
-	              ref.on("value", (snapshot) => {
-	                console.log(snapshot.val());
-	                dispatch(setPlaceDetails(json.result))
-	              }, (errorObject) => {
-	                console.log("The read failed: " + errorObject.code);
-	              });
-
-	           });
-		}
+	  Promise.all([
+	  	getPlaceRatings(placeId),
+	  	getPlaceReviews(placeId),
+	  	getPlaceDetails(placeId)
+	  ]).then(([ratings, reviews, details]) => {
+	  	if(Config.USE_STUBBED_DATA == 'true') {
+		  	details = require('../../data/placeDetails.js').default
+		  }
+		  let ratingRes = calcRatings(ratings);
+		  let place = {
+		  	ratings,
+		  	ratingRes,
+		  	details,
+		  	reviews
+		  };
+	  	dispatch(setPlaceDetails(place));
+	  }).catch(error => console.log(error));
 	}
-};
+}
 
 export const setPlaceDetails = (place) => ({
 	type: SET_PLACE_DETAILS,

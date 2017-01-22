@@ -25,8 +25,7 @@ const LONGITUDE = -122.4324;
 function selectedPlace(state = null, action) {
 	switch(action.type){
 		case SET_PLACE_DETAILS:
-			let place = Object.assign({}, state, action.place)
-			return place;
+			return Object.assign({}, state, action.place);
 		default:
 			return state;
 	}

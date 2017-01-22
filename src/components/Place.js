@@ -29,7 +29,7 @@ export const border = {
 
 var screen = Dimensions.get('window');
 
-const PlaceScreen = ({ place }) => {
+const Place = ({ place  }) => {
   if(place == null){
     return (
         <View style={{
@@ -44,14 +44,14 @@ const PlaceScreen = ({ place }) => {
   }
 
   return (
-
-    <View style={styles.container}>
-      <TabView>
+    <ScrollView style={styles.container}>
         <PlaceDetails place={place} tabLabel="Details" />
-        <PlaceComments tabLabel="Comments" />
-      </TabView>
-    </View>
+    </ScrollView>
   );
+}
+
+Place.propTypes = {
+  place: React.PropTypes.object
 }
 
 var styles = StyleSheet.create({
@@ -109,4 +109,4 @@ var styles = StyleSheet.create({
 
 
 
-export default PlaceScreen;
+export default Place;
