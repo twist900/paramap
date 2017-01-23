@@ -74,8 +74,8 @@ const PlaceDetails = ({ place, isLoading }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={place.ratingRes.entrance} />
-          <Text style={styles.ratingText}>Entry</Text>
+              rating={place.ratingRes.entrance.rating} />
+          <Text style={styles.ratingText}>{place.ratingRes.entrance.count}</Text>
         </View>
       </View>
 
@@ -91,8 +91,8 @@ const PlaceDetails = ({ place, isLoading }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={place.ratingRes.bathroom} />
-          <Text style={styles.ratingText}>Bathroom</Text>
+              rating={place.ratingRes.bathroom.rating} />
+          <Text style={styles.ratingText}>{place.ratingRes.bathroom.count}</Text>
         </View>
       </View>
 
@@ -108,8 +108,8 @@ const PlaceDetails = ({ place, isLoading }) => {
               starColor='#D3E02E'
               starSize={30}
               maxStars={5}
-              rating={place.ratingRes.parking} />
-          <Text style={styles.ratingText}>Parking</Text>
+              rating={place.ratingRes.parking.rating} />
+          <Text style={styles.ratingText}>{place.ratingRes.parking.count}</Text>
         </View>
       </View>
     </View>

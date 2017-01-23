@@ -27,9 +27,12 @@ export const calcRatings = (userRatings) => {
 		});
 	});
 
-	let bathroomRes = bathroomCount > 0 ? bathroom/bathroomCount : null;
-	let entranceRes = entranceCount > 0 ? entrance/entranceCount : null;
-	let parkingRes = parkingCount > 0 ? parking/parkingCount : null
+	let bathroomRating = bathroomCount > 0 ? bathroom/bathroomCount : null;
+	let entranceRating = entranceCount > 0 ? entrance/entranceCount : null;
+	let parkingRating = parkingCount > 0 ? parking/parkingCount : null;
 
-	return { bathroom: bathroomRes, entrance: entranceRes, parking: parkingRes}
+
+	return { bathroom: { rating: bathroomRating, count: bathroomCount },
+					 entrance: { rating: entranceRating, count: entranceCount},
+					 parking:  { rating: parkingRating,  count: parkingCount} }
 }
