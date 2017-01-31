@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,9 @@ import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import StarRating from 'react-native-star-rating';
 import TabView from 'react-native-scrollable-tab-view';
+import ParallaxView from "react-native-parallax-view";
 
 import PlaceDetails from './PlaceDetails';
-import PlaceComments from './PlaceComments';
 import {
     PixelRatio,
 } from 'react-native';
@@ -29,29 +29,22 @@ export const border = {
 
 var screen = Dimensions.get('window');
 
-const Place = ({ place  }) => {
-  if(place == null){
-    return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center'
-        }}>
-            <ActivityIndicator
-                size="large"
-                animating={true} />
-        </View>
-    );
-  }
-
+const Place = ({ place, isLoading }) => {
   return (
-    <ScrollView style={styles.container}>
-        <PlaceDetails place={place} tabLabel="Details" />
-    </ScrollView>
+    <ParallaxView
+      backgroundSource={require('../../img/placeholder.png')}
+      windowHeight={300}
+      >
+      <PlaceDetails
+        place={place}
+        tabLabel="Details"
+        entranceRating={place.ratingRes.entrance}
+        bathroomRating={place.ratingRes.bathroom}
+        parkingRating={place.ratingRes.parking}
+        isLoading={isLoading}
+      />
+    </ParallaxView>
   );
-}
-
-Place.propTypes = {
-  place: React.PropTypes.object
 }
 
 var styles = StyleSheet.create({

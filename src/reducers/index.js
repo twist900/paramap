@@ -6,7 +6,8 @@ import {
 	REQUEST_PLACES,
 	RECEIVE_PLACES,
 	SET_CURRENT_POSITION,
-  TOGGLE_LOADING
+  TOGGLE_LOADING,
+	SUBMIT_REVIEW
 } from '../actions';
 import { user } from './user';
 
@@ -16,16 +17,34 @@ var initialState = {
 		longitude: '',
 		latitude: ''
 	},
-	nearbyPlaces: []
+	nearbyPlaces: [],
+	selectedPlace: {
+		ratingRes: {
+			entrance: 0,
+			parking: 0,
+			bathroom: 0
+		}
+	}
 }
 
 const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 
-function selectedPlace(state = null, action) {
+function selectedPlace(state = initialState.selectedPlace, action) {
 	switch(action.type){
 		case SET_PLACE_DETAILS:
 			return Object.assign({}, state, action.place);
+		case SUBMIT_REVIEW:
+			return {
+				...state,
+				reviews: {
+					...state.reviews,
+					[action.review.id]: {
+						body: action.review.body,
+						reviewer: action.review.reviewer
+					}
+				}
+			};
 		default:
 			return state;
 	}

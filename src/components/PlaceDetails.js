@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,27 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
-  TextInput
+  TextInput,
+  Button
 } from 'react-native';
+import {
+  Card,
+  CardImage,
+  CardTitle,
+  CardContent,
+  CardAction
+} from 'react-native-card-view';
+
 import Config from 'react-native-config';
 import Gallery from 'react-native-gallery';
 import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import StarRating from 'react-native-star-rating';
 import TabView from 'react-native-scrollable-tab-view';
+import StarRating from 'react-native-star-rating';
+import { Actions } from 'react-native-router-flux';
+import _ from 'lodash';
+
+import ReviewItem from './ReviewItem';
 import {
     PixelRatio,
 } from 'react-native';
@@ -26,100 +39,139 @@ export const border = {
 
 var screen = Dimensions.get('window');
 
-const PlaceDetails = ({ place, isLoading }) => {
-  if(isLoading){
+class PlaceDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isReviewListModalOpen: false
+    }
+  }
+
+  renderRating(title, rating, rateCount) {
     return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center'
-        }}>
-            <ActivityIndicator
-                size="large"
-                animating={true} />
+      <View style={[styles.topAndBottom, styles.judgementArea]}>
+        <View style={styles.ratingStar}>
+          <Text style={{fontSize: 16, marginRight: 10}}>{title}</Text>
+          <StarRating
+            selectedStar={(rating)=> {}}
+            emptyStar={'ios-star-outline'}
+            fullStar={'ios-star'}
+            halfStar={'ios-star-half'}
+            iconSet={'Ionicons'}
+            starColor='#D3E02E'
+            starSize={25}
+            maxStars={5}
+            rating={rating} />
+          <Text style={styles.ratingText}>{rateCount}</Text>
         </View>
+      </View>
     );
   }
 
-  return (
-    <View>
+  openReviewModal() {
+    Actions.reviewModal({place: this.props.place});
+  }
 
-      <View style={styles.galleryContainer}>
-        <Gallery
-          style={styles.gallery}
-          images={
-            place.photos.map( (image) => {
-              // return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
-            })
-          }
-        />
-      </View>
+  openReviewListModal() {
+    Actions.reviewListModal({reviews: _.toArray(this.props.place.reviews)});
+  }
 
-      <View style={styles.nameContainer}>
-        <Text style={styles.nameText}>{place.name}</Text>
-      </View>
+  renderReviewPreview() {
+    let reviewsArray = _.toArray(this.props.place.reviews)
+    let topThreeReviews =_.take(reviewsArray, 3);
 
-      <View style={styles.addressContainer}>
-        <Text style={styles.addressText}>{place.formatted_address}</Text>
-      </View>
+    let placeReviews = _.map(topThreeReviews, (review, i) => {
+      return <View key={i}>
+         <ReviewItem review={review}/>
+       </View>
+    });
 
-      <View style={[styles.topAndBottom, styles.judgementArea]}>
-        <View style={styles.ratingStar}>
-          <Text style={{fontSize: 16, marginRight: 10}}>Entry</Text>
-          <StarRating
-              selectedStar={(rating)=> {}}
-              emptyStar={'ios-star-outline'}
-              fullStar={'ios-star'}
-              halfStar={'ios-star-half'}
-              iconSet={'Ionicons'}
-              starColor='#D3E02E'
-              starSize={30}
-              maxStars={5}
-              rating={place.ratingRes.entrance.rating} />
-          <Text style={styles.ratingText}>{place.ratingRes.entrance.count}</Text>
+    return (
+      <View>
+        <View style={styles.heading}>
+          <Text style={styles.headingText}>Reviews</Text>
+          {placeReviews}
+          <View style={styles.reviewsButtons}>
+            <Button onPress={this.openReviewListModal.bind(this)} title="Show all" />
+            <Button onPress={this.openReviewModal.bind(this)} title="Add" />
+          </View>
         </View>
       </View>
+    );
+  }
 
-      <View style={[styles.topAndBottom, styles.judgementArea]}>
-        <View style={styles.ratingStar}>
-          <Text style={{fontSize: 16, marginRight: 10}}>Bathroom</Text>
-          <StarRating
-              selectedStar={(rating)=> {}}
-              emptyStar={'ios-star-outline'}
-              fullStar={'ios-star'}
-              halfStar={'ios-star-half'}
-              iconSet={'Ionicons'}
-              starColor='#D3E02E'
-              starSize={30}
-              maxStars={5}
-              rating={place.ratingRes.bathroom.rating} />
-          <Text style={styles.ratingText}>{place.ratingRes.bathroom.count}</Text>
-        </View>
-      </View>
+  render() {
+    if(this.props.isLoading || this.props.place == null){
+      return (
+          <View style={{
+              flex: 1,
+              justifyContent: 'center'
+          }}>
+              <ActivityIndicator
+                  size="large"
+                  animating={true} />
+          </View>
+      );
+    }
 
-      <View style={[styles.topAndBottom, styles.judgementArea]}>
-        <View style={styles.ratingStar}>
-          <Text style={{fontSize: 16, marginRight: 10}}>Parking</Text>
-          <StarRating
-              selectedStar={(rating)=> {}}
-              emptyStar={'ios-star-outline'}
-              fullStar={'ios-star'}
-              halfStar={'ios-star-half'}
-              iconSet={'Ionicons'}
-              starColor='#D3E02E'
-              starSize={30}
-              maxStars={5}
-              rating={place.ratingRes.parking.rating} />
-          <Text style={styles.ratingText}>{place.ratingRes.parking.count}</Text>
+    return (
+      <View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameText}>{this.props.place.name}</Text>
         </View>
+
+        <View style={styles.addressContainer}>
+          <Text style={styles.addressText}>{this.props.place.formatted_address}</Text>
+        </View>
+
+        {this.renderRating('Entrance', this.props.entranceRating.rating,  this.props.entranceRating.count)}
+        {this.renderRating('Bathroom', this.props.bathroomRating.rating, this.props.bathroomRating.count)}
+        {this.renderRating('Parking', this.props.parkingRating.rating, this.props.parkingRating.count)}
+
+        <View style={styles.separator} />
+        {this.renderReviewPreview()}
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 PlaceDetails.propTypes = {
-  place: React.PropTypes.object
+  place: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired,
+  entranceRating: PropTypes.object.isRequired,
+  bathroomRating: PropTypes.object.isRequired,
+  parkingRating: PropTypes.object.isRequired,
 }
+
 var styles = StyleSheet.create({
+  reviewsButtons: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 15
+
+  },
+  heading: {
+    paddingLeft: 15,
+    paddingBottom: 20
+  },
+  headingText: {
+    fontWeight: "700",
+    fontSize: 16
+  },
+  separator: {
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    height: 1 / PixelRatio.get(),
+    marginVertical: 10,
+   },
+  title: {
+     fontSize: 38,
+     backgroundColor: 'transparent'
+   },
+   button: {
+     marginRight: 10
+   },
   container: {
     flex: 1
   },
@@ -163,12 +215,11 @@ var styles = StyleSheet.create({
     borderBottomColor: '#d8d8d8',
     borderBottomWidth: border.width,
   },
-
   judgementArea: {
-         marginTop: 10,
-         backgroundColor: '#FFF',
-         padding: 12
-     },
+    marginTop: 10,
+    backgroundColor: '#FFF',
+    padding: 12
+  },
 });
 
 

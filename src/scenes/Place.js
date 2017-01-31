@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({
   place: state.selectedPlace,
+  isLoading: state.isLoading
 });
 
 const Place = connect(mapStateToProps)(PlaceScreen);

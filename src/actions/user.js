@@ -5,7 +5,7 @@ import {
 } from 'react-native-fbsdk';
 
 import { facebookLoginAPI, getFacebookInfoAPI } from '../services/facebook'
-import { firebaseFacebookAuth } from '../services/firebase';
+import { firebaseFacebookAuth, postProfile } from '../services/firebase';
 
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const SKIPPED_AUTH = 'SKIPPED_AUTH';
@@ -30,7 +30,7 @@ export const logout = () => {
   };
 };
 
-const setFirebaseFacebookAuth = (facebookToken) => {
+const setFirebaseFacebookAuth = (facebookToken, profile) => {
   return dispatch => {
     firebaseFacebookAuth(facebookToken)
       .then((credentials) => {
@@ -38,6 +38,7 @@ const setFirebaseFacebookAuth = (facebookToken) => {
           type: FIREBASE_AUTH_FACEBOOK,
           credentials
         });
+        postProfile(credentials.user.uid, profile)
       })
       .catch((error) => {
         console.log(error);
@@ -51,18 +52,15 @@ export const facebookLogin = () => {
     facebookLoginAPI()
     .then((facebookAuthResult) => {
       successValues.push(facebookAuthResult.accessToken);
-      dispatch(setFirebaseFacebookAuth(facebookAuthResult.accessToken));
       return getFacebookInfoAPI(facebookAuthResult.accessToken);
     })
     .then((facebookProfile) => {
       successValues.push(facebookProfile);
+      dispatch(setFirebaseFacebookAuth(successValues[0], facebookProfile));
       dispatch(authSuccess(...successValues));
     })
     .catch((error) => {
-      dispatch(authFailure(error));
-      setTimeout(() => {
-        dispatch(authFailureRemove());
-      }, 4000);
+      console.log(error);
     });
   };
 };

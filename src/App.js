@@ -3,15 +3,18 @@ import { connect } from 'react-redux';
 import {
 	View,
 	StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Navigator
 } from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, Schema } from 'react-native-router-flux';
 
 import { setCurrentPosition, toggleLoading, setSkippedLogin, setAuthState } from './actions';
 
 import Login from './scenes/Login';
 import MapList from './scenes/MapList';
 import Place from './scenes/Place';
+import ReviewListModal from './components/ReviewListModal';
+import ReviewModal from './scenes/ReviewModal';
 
 import {
   AccessToken
@@ -52,12 +55,14 @@ class App extends Component {
     }
 
 		return (
-   		<Router>
-   			<Scene key="root">
-   				<Scene key="map" showNavigationBar={false} component={MapList} title="Map" initial={true} />
-   				<Scene key="placeDetails"  component={Place} title="Details" />
-   			</Scene>
-      </Router>
+        <Router>
+     			<Scene key="root">
+     				<Scene key="map" showNavigationBar={false} component={MapList} title="Map" initial={true} />
+     				<Scene key="placeDetails"  component={Place} title="Details" />
+            <Scene key="reviewListModal" direction="vertical" hideNavBar={true} component={ReviewListModal} />
+     			  <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
+          </Scene>
+        </Router>
    	);
 	}
 }

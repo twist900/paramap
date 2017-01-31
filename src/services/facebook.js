@@ -6,6 +6,7 @@ import {
 } from 'react-native-fbsdk';
 
 const facebookParams = 'id,name,email,picture.width(100).height(100)';
+const reviewerParams = 'id,name,picture.width(100).height(100)';
 
 export function facebookLoginAPI() {
   return new Promise((resolve, reject) => {
@@ -54,3 +55,4 @@ export function getFacebookInfoAPI() {
     new GraphRequestManager().addRequest(profileInfoRequest).start();
   });
 }
+

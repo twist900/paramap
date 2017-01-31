@@ -9,7 +9,8 @@ import {
   Animated,
   Platform,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from 'react-native';
 import Config from 'react-native-config';
 import { BlurView } from 'react-native-blur';
@@ -380,6 +381,7 @@ export default class  AnimatedViews extends React.Component{
 
     return (
       <View style={styles.container}>
+        <Text style={{position: 'absolute', bottom: 500, left: 520}}>Hello</Text>
         <PanController
           style={styles.container}
           vertical
@@ -464,7 +466,6 @@ export default class  AnimatedViews extends React.Component{
 }
 
 var styles = StyleSheet.create({
-
   container: {
     position: 'absolute',
     top: 0,
@@ -498,15 +499,7 @@ var styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: '#000',
   },
-  button: {
-    height: 60,
-    borderColor: '#05A5D1',
-    borderWidth: 2,
-    backgroundColor: '#333',
-    margin: 20,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+
   placeImage: {
     flex:1,
     width: null,
