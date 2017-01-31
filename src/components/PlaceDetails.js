@@ -11,18 +11,12 @@ import {
   TextInput,
   Button
 } from 'react-native';
-import {
-  Card,
-  CardImage,
-  CardTitle,
-  CardContent,
-  CardAction
-} from 'react-native-card-view';
 
 import Config from 'react-native-config';
 import Gallery from 'react-native-gallery';
 import MapView from 'react-native-maps';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
+import AdvancedButton from 'react-native-button';
 import TabView from 'react-native-scrollable-tab-view';
 import StarRating from 'react-native-star-rating';
 import { Actions } from 'react-native-router-flux';
@@ -65,6 +59,34 @@ class PlaceDetails extends Component {
             rating={rating} />
           <Text style={styles.ratingText}>{rateCount}</Text>
         </View>
+      </View>
+    );
+  }
+
+  renderRatings() {
+    return (
+      <View style={styles.ratings}>
+        <AdvancedButton onPress={() => {}}>
+          <View style={styles.ratingButton}>
+            <Text>Entrance</Text>
+            <Icon name="ios-pizza-outline" size={75} color="#a3a3a3" />
+            <Text>{ this.props.entranceRating.count }/5</Text>
+          </View>
+        </AdvancedButton>
+        <AdvancedButton onPress={() => {}}>
+          <View style={styles.ratingButton}>
+            <Text>Bathroom</Text>
+            <Icon name="ios-glasses-outline" size={75} color="#a3a3a3" />
+            <Text>{ this.props.bathroomRating.count }/5</Text>
+          </View>
+        </AdvancedButton>
+        <AdvancedButton onPress={() => {}}>
+          <View style={styles.ratingButton}>
+            <Text>Parking</Text>
+            <Icon name="ios-flask-outline" size={75} color="#a3a3a3" />
+            <Text>{ this.props.parkingRating.count }/5</Text>
+          </View>
+        </AdvancedButton>
       </View>
     );
   }
@@ -125,9 +147,7 @@ class PlaceDetails extends Component {
           <Text style={styles.addressText}>{this.props.place.formatted_address}</Text>
         </View>
 
-        {this.renderRating('Entrance', this.props.entranceRating.rating,  this.props.entranceRating.count)}
-        {this.renderRating('Bathroom', this.props.bathroomRating.rating, this.props.bathroomRating.count)}
-        {this.renderRating('Parking', this.props.parkingRating.rating, this.props.parkingRating.count)}
+        { this.renderRatings() }
 
         <View style={styles.separator} />
         {this.renderReviewPreview()}
@@ -220,6 +240,14 @@ var styles = StyleSheet.create({
     backgroundColor: '#FFF',
     padding: 12
   },
+  ratings: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  ratingButton: {
+    flex: 1, alignItems: 'center'
+  }
 });
 
 
