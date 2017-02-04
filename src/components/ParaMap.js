@@ -9,7 +9,7 @@ import MapView from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import _ from 'lodash';
 
-import PlaceSlide from './PlaceSlide';
+import PlaceSlide from './PlaceItem';
 
 export default class ParaMap extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ export default class ParaMap extends Component {
 
   renderItem(place) {
     return (
-      <PlaceSlide onPlaceClick={this.props.onPlaceClick} place={place} />
+      <PlaceSlide onPlaceClick={this.props.onPlaceClick} isSlider={true} place={place} />
     );
   }
 
@@ -109,7 +109,7 @@ export default class ParaMap extends Component {
 ParaMap.propTypes = {
   places: PropTypes.array.isRequired,
   currentPosition: PropTypes.object.isRequired,
-  onPlaceClick: PropTypes.func.requires
+  onPlaceClick: PropTypes.func.isRequired
 }
 
 let styles = StyleSheet.create({

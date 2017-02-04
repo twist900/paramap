@@ -7,7 +7,6 @@ export const calcRatings = (userRatings) => {
 	let entranceCount = 0;
 	let parking  = 0;
 	let parkingCount = 0;
-
 	_.forOwn(userRatings, function(value, key) {
 		_.forOwn(value, function(rating, key) {
 			switch(key){
@@ -27,9 +26,9 @@ export const calcRatings = (userRatings) => {
 		});
 	});
 
-	let bathroomRating = bathroomCount > 0 ? bathroom/bathroomCount : null;
-	let entranceRating = entranceCount > 0 ? entrance/entranceCount : null;
-	let parkingRating = parkingCount > 0 ? parking/parkingCount : null;
+	let bathroomRating = bathroomCount > 0 ? bathroom/bathroomCount : 0;
+	let entranceRating = entranceCount > 0 ? entrance/entranceCount : 0;
+	let parkingRating = parkingCount > 0 ? parking/parkingCount : 0;
 
 
 	return { bathroom: { rating: bathroomRating.toFixed(1), count: bathroomCount },

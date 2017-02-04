@@ -5,13 +5,15 @@ export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
 export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
+export const SET_PLACE_TYPE = 'SET_PLACE_TYPE';
+
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const SUBMIT_REVIEW = 'SUBMIT_REVIEW';
 export const SUBMIT_RATING = 'SUBMIT_RATING';
 
 import * as firebase from 'firebase';
 import { getPlaceRatings, getPlaceReviews, postPlaceReview, postPlaceRating } from '../services/firebase';
-import { getPlaceDetails } from '../services/google';
+import { getPlaceDetails, getNearbyPlaces } from '../services/google';
 import { calcRatings } from '../utils/ratings';
 
 export const toggleLoading = (isLoading) => ({
@@ -33,36 +35,26 @@ export const receivePlaces = (json) => {
 	}
 };
 
-export const setCurrentPosition = (currentPosition) => {
-	return dispatch => {
-		dispatch({
-			type: SET_CURRENT_POSITION,
-			position: currentPosition
-		});
-		dispatch(fetchNearbyPlaces(currentPosition));
-	}
-};
-
-export const fetchNearbyPlaces = (position) => {
+export const fetchNearbyPlaces = (placeType) => {
 	return dispatch => {
 		dispatch(toggleLoading(true));
 		dispatch(requestPlaces);
 
 		// As Google Places Api has a request threshold, for development purposes,
 		// we use stubbed data
-		if(Config.USE_STUBBED_DATA == 'true') {
-			dispatch(receivePlaces({ results: require('../../data/places.js').default }));
-		} else {
-			var url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${position.latitude},${position.longitude}&radius=500&key=${Config.GOOGLE_MAPS_API_KEY}`;
-			return fetch(url)
+		// if(Config.USE_STUBBED_DATA == 'true') {
+		// 	dispatch(receivePlaces({ results: require('../../data/places.js').default }));
+		// } else {
+			getNearbyPlaces(placeType)
 				.then(response => response.json())
-				.then(json => dispatch(receivePlaces(json)));
-
-		}
+				.then(json => dispatch(receivePlaces(json)))
+				.catch(error => console.log(error))
+		// }
 	};
 };
 
 export const selectPlace = (placeId) => {
+	debugger;
 	return dispatch => {
 	  Promise.all([
 	  	getPlaceRatings(placeId),
@@ -80,8 +72,9 @@ export const selectPlace = (placeId) => {
 		  	reviews
 		  };
 		  place.id = placeId;
+		  debugger;
 	  	dispatch(setPlaceDetails(place));
-	  }).catch(error => console.log(error));
+	  }).catch(error => { console.log(error) });
 	}
 }
 
@@ -117,6 +110,16 @@ export const submitRating = (placeId, rating) => {
 			.catch((error) => { this.setState({text: error}) })
 	}
 };
+
+export const setPlaceSearchType = (type) => {
+	return dispatch => {
+		dispatch({
+			type: SET_PLACE_TYPE,
+			placeType: type
+		});
+		dispatch(fetchNearbyPlaces(type));
+	}
+}
 
 import {
 	setSkippedAuth,

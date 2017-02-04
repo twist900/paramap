@@ -11,7 +11,7 @@ import { Scene, Router, Schema, Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { setCurrentPosition, toggleLoading, setSkippedLogin, setAuthState } from './actions';
+import { fetchNearbyPlaces } from './actions';
 
 import Login from './scenes/Login';
 import ParaMap from './scenes/ParaMap';
@@ -31,14 +31,7 @@ class App extends Component {
 	}
 
   componentWillMount() {
-    this.setCurrentPosition();
-  }
-
-  setCurrentPosition() {
-    navigator.geolocation.getCurrentPosition(
-      initialPosition => this.props.dispatch(setCurrentPosition(initialPosition.coords)),
-      error => alert(error.message)
-    );
+    this.props.dispatch(fetchNearbyPlaces(this.props.currentType));
   }
 
   renderMapButton() {
@@ -101,7 +94,8 @@ const mapPropsToState = (state) => ({
   showLoginScreen: !state.user.skippedAuth && !state.user.facebookToken,
   isLoading: state.isLoading,
   nearbyPlaces: state.nearbyPlaces,
-  user: state.user
+  user: state.user,
+  currentType: state.currentType
 });
 
 // ;

@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import PlaceSlide from '../components/PlaceSlide';
+import PlaceSlide from '../components/PlaceItem';
+import { selectPlace } from '../actions';
+import { Actions } from 'react-native-router-flux';
 
 class ParaList extends Component {
 	constructor(props) {
@@ -22,21 +24,38 @@ class ParaList extends Component {
    	};
 	}
 
+	renderRow(rowData) {
+		return (
+			<PlaceSlide
+				place={rowData}
+				isSlider={false}
+				onPlaceClick={this.props.onPlaceClick}
+				/>
+		);
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
 				<ListView
 	        dataSource={this.state.dataSource}
-	        renderRow={(rowData) => <PlaceSlide place={rowData} onPlaceClick={() => {}} />}
+	        renderRow={this.renderRow.bind(this)}
 	      />
 			</View>
 		);
 	}
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onPlaceClick(placeId){
+    dispatch(selectPlace(placeId));
+    Actions.placeDetails();
+  }
+})
+
 export default connect((state) => ({
 	places: state.nearbyPlaces,
-}))(ParaList);
+}), mapDispatchToProps)(ParaList);
 
 export const border = {
     width: 1 / PixelRatio.get(),

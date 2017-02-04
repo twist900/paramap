@@ -10,10 +10,14 @@ import {
 	TouchableOpacity,
 	Image
 } from 'react-native';
+import { connect } from 'react-redux';
 import Button from 'react-native-button';
 import ReviewItem from '../components/ReviewItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
+import { BlurView } from 'react-native-blur';
+
+import { setPlaceSearchType } from '../actions';
 
 class FiltersModal extends Component {
 	constructor(props) {
@@ -34,18 +38,17 @@ class FiltersModal extends Component {
 			<TouchableOpacity
 				activeOpacity={0.9}
 				style={styles.slideInnerContainer}
-				onPress={() => {}}
+				onPress={() => { this.props.dispatch(setPlaceSearchType(rowData.google_type))}}
 			>
 				<View style={styles.imageContainer}>
 					<Image
 						source={{ uri: rowData.image }}
-						style={styles.image}
-					/>
+						style={styles.image} >
+						<BlurView blurType="dark" blurAmount={0.1} style={styles.blur}>
+							<Text style={styles.filterTitle}>{rowData.type}</Text>
+						</BlurView>
+					</Image>
 				</View>
-				<View style={styles.textContainer}>
-            <Text style={styles.title} numberOfLines={2}>{ rowData.name }</Text>
-            {/*<Text style={styles.subtitle} numberOfLines={2}>{ subtitle }</Text>*/}
-        </View>
 			</TouchableOpacity>
 		);
 	}
@@ -69,10 +72,6 @@ class FiltersModal extends Component {
 	}
 }
 
-FiltersModal.propTypes = {
-	reviews: PropTypes.array.isRequired
-}
-
 export const border = {
     width: 1 / PixelRatio.get(),
 };
@@ -80,9 +79,8 @@ export const border = {
 let width =  Dimensions.width;
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-const slideHeight = viewportHeight * 0.4;
-const slideWidth = viewportWidth * 0.9;
-const entryBorderRadius = 6;
+const slideHeight = viewportHeight * 0.25;
+const slideWidth = viewportWidth;
 
 let styles = StyleSheet.create({
 	container: {
@@ -113,28 +111,34 @@ let styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     backgroundColor: '#888888',
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
   },
   modal: {
-  	justifyContent: 'center'
+  	justifyContent: 'center',
+  	alignItems: 'center'
   },
   image: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
     width: null,
     height: null,
-    borderRadius: Platform.OS === 'ios' ? entryBorderRadius : 0,
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
+  },
+  blur: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  filterTitle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 24,
+    letterSpacing: 0.5
   },
   textContainer: {
     justifyContent: 'center',
     paddingVertical: 20,
     paddingHorizontal: 16,
     backgroundColor: 'white',
-    borderBottomLeftRadius: entryBorderRadius,
-    borderBottomRightRadius: entryBorderRadius
   },
   title: {
     color: '#1a1917',
@@ -150,4 +154,4 @@ let styles = StyleSheet.create({
   }
 });
 
-export default FiltersModal;
+export default connect((state) => ({}))(FiltersModal);

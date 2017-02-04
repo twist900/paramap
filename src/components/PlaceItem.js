@@ -9,8 +9,28 @@ import {
 	Platform} from 'react-native';
 import Config from 'react-native-config';
 
-export default class PlaceSlide extends Component {
-	render() {
+export default class PlaceItem extends Component {
+	placeItemStyle() {
+    return this.props.isSlider ? {
+      borderTopLeftRadius: entryBorderRadius,
+      borderTopRightRadius: entryBorderRadius,
+      height:  viewportHeight * 0.3,
+      width: viewportWidth * 0.9
+    } : {
+      height: viewportHeight * 0.3,
+      width: viewportWidth
+    };
+  }
+
+  imageStyle() {
+    return this.props.isSlider ? {
+      borderRadius: Platform.OS === 'ios' ? entryBorderRadius : 0,
+      borderTopLeftRadius: entryBorderRadius,
+      borderTopRightRadius: entryBorderRadius
+    } : {}
+  }
+
+  render() {
 		let { place } = this.props;
 		let uri = "'../../img/placeholder.png'";
 	  if(place.photos && place.photos.length > 0) {
@@ -24,10 +44,10 @@ export default class PlaceSlide extends Component {
 				style={styles.slideInnerContainer}
 				onPress={() => this.props.onPlaceClick(place.place_id)}
 			>
-				<View style={styles.imageContainer}>
+				<View style={this.placeItemStyle()}>
 					<Image
 						source={{ uri: uri }}
-						style={styles.image}
+						style={[styles.image, this.imageStyle()]}
 					/>
 				</View>
 				<View style={styles.textContainer}>
@@ -39,36 +59,25 @@ export default class PlaceSlide extends Component {
 	}
 }
 
-PlaceSlide.PropTypes = {
+PlaceItem.PropTypes = {
 	place: PropTypes.object.isRequired,
-	onPlaceClick: PropTypes.func.isRequired
+	onPlaceClick: PropTypes.func.isRequired,
+  isSlider: PropTypes.bool.isRequired
 }
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-const slideHeight = viewportHeight * 0.4;
-const slideWidth = viewportWidth * 0.9;
 const entryBorderRadius = 6;
 
 let styles = StyleSheet.create({
-  slideInnerContainer: {
-    height: slideHeight,
-    width: slideWidth
-  },
-
   imageContainer: {
     flex: 1,
     backgroundColor: '#888888',
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
   },
   image: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
     width: null,
     height: null,
-    borderRadius: Platform.OS === 'ios' ? entryBorderRadius : 0,
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
   },
   textContainer: {
     justifyContent: 'center',

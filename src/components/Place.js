@@ -9,7 +9,8 @@ import {
   StatusBar,
   ScrollView,
   TextInput,
-  Button
+  Button,
+  Image
 } from 'react-native';
 
 import Config from 'react-native-config';
@@ -22,6 +23,7 @@ import TabView from 'react-native-scrollable-tab-view';
 import StarRating from 'react-native-star-rating';
 import { Actions } from 'react-native-router-flux';
 import ParallaxView from "react-native-parallax-view";
+import Carousel from 'react-native-snap-carousel';
 import _ from 'lodash';
 
 import ReviewItem from './ReviewItem';
@@ -34,6 +36,7 @@ export const border = {
 };
 
 var screen = Dimensions.get('window');
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 class Place extends Component {
   constructor(props) {
@@ -134,36 +137,69 @@ class Place extends Component {
     );
   }
 
+  placePhotoUrl(photo_reference) {
+    return `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
+  }
+  renderCarouselItem(photo) {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => {}}
+      >
+        <View style={styles.placeImageStyle}>
+          <Image
+            source={{ uri: this.placePhotoUrl(photo.photo_reference) }}
+            style={styles.image}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  renderImageCarousel() {
+    return (
+      <View style={{}}>
+        <Carousel
+          ref={'carousel'}
+          style={{paddingLeft: 20, paddingBottom: 10}}
+          items={this.props.place.details.photos}
+          renderItem={this.renderCarouselItem.bind(this)}
+          itemWidth={viewportWidth * 0.9}
+          sliderWidth={viewportWidth}
+         />
+      </View>
+    );
+  }
+
   render() {
     if(this.props.isLoading || this.props.place == null){
       return (
-          <View style={{
-              flex: 1,
-              justifyContent: 'center'
-          }}>
-              <ActivityIndicator
-                  size="large"
-                  animating={true} />
-          </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center'
+        }}>
+          <ActivityIndicator
+              size="large"
+              animating={true} />
+        </View>
       );
     }
 
+    // require('../../img/placeholder.png');
     return (
       <View style={{flex: 1}}>
         <ParallaxView
-          backgroundSource={require('../../img/placeholder.png')}
-          windowHeight={300}
+          backgroundSource={{ uri: this.placePhotoUrl(this.props.place.details.photos[0].photo_reference) }}
+          windowHeight={350}
           >
-          <View style={styles.nameContainer}>
-            <Text style={styles.nameText}>{this.props.place.name}</Text>
+          <View style={styles.descContainer}>
+            <Text style={styles.nameText}>{this.props.place.details.name}</Text>
+            <Text style={styles.addressText}>{this.props.place.details.formatted_address}</Text>
           </View>
-
-          <View style={styles.addressContainer}>
-            <Text style={styles.addressText}>{this.props.place.formatted_address}</Text>
-          </View>
-
+          <View style={styles.separator} />
           { this.renderRatings() }
-
+          <View style={styles.separator} />
+          {this.renderImageCarousel()}
           <View style={styles.separator} />
           {this.renderReviewPreview()}
         </ParallaxView>
@@ -185,6 +221,16 @@ Place.propTypes = {
 }
 
 var styles = StyleSheet.create({
+  placeImageStyle: {
+    height: viewportHeight * 0.3,
+    width: viewportWidth * 0.9
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+    width: null,
+    height: null,
+  },
   ratingModal: {
     height: 300,
     width: 300,
@@ -212,7 +258,9 @@ var styles = StyleSheet.create({
     marginVertical: 10,
    },
   title: {
-     fontSize: 38,
+     fontSize: 24,
+     fontWeight: 'bold',
+     letterSpacing: 5,
      backgroundColor: 'transparent'
    },
    button: {
@@ -233,23 +281,15 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  nameContainer: {
-    backgroundColor: '#F7F7F7',
+  descContainer: {
     height: 60,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingLeft: 15
+    margin: 20
   },
   nameText: {
-    fontSize: 40,
-    fontFamily: 'Helvetica-Bold'
-  },
-  addressContainer: {
-    backgroundColor: '#F7F7F7',
-    height: 30,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: 15
+    fontSize: 35,
+    fontWeight: 'bold',
   },
   addressText: {
     fontSize: 14,

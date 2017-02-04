@@ -7,7 +7,8 @@ import {
 	RECEIVE_PLACES,
 	SET_CURRENT_POSITION,
   TOGGLE_LOADING,
-	SUBMIT_REVIEW
+	SUBMIT_REVIEW,
+	SET_PLACE_TYPE
 } from '../actions';
 import { user } from './user';
 
@@ -17,6 +18,7 @@ var initialState = {
 		longitude: '',
 		latitude: ''
 	},
+	currentType: '',
 	nearbyPlaces: [],
 	selectedPlace: {
 		ratingRes: {
@@ -58,6 +60,15 @@ function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, a
 				longitude: action.position.longitude
 			});
 			return position;
+		default:
+			return state;
+	}
+}
+
+function currentType(state = 'Restaurant', action) {
+	switch(action.type) {
+		case SET_PLACE_TYPE:
+			return action.placeType
 		default:
 			return state;
 	}
