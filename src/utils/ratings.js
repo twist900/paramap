@@ -32,7 +32,7 @@ export const calcRatings = (userRatings) => {
 	let parkingRating = parkingCount > 0 ? parking/parkingCount : null;
 
 
-	return { bathroom: { rating: bathroomRating, count: bathroomCount },
-					 entrance: { rating: entranceRating, count: entranceCount},
-					 parking:  { rating: parkingRating,  count: parkingCount} }
+	return { bathroom: { rating: bathroomRating.toFixed(1), count: bathroomCount },
+					 entrance: { rating: entranceRating.toFixed(1), count: entranceCount},
+					 parking:  { rating: parkingRating.toFixed(1),  count: parkingCount} }
 }

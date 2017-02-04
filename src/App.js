@@ -4,17 +4,22 @@ import {
 	View,
 	StyleSheet,
   ActivityIndicator,
-  Navigator
+  Navigator,
+  Text
 } from 'react-native';
-import { Scene, Router, Schema } from 'react-native-router-flux';
+import { Scene, Router, Schema, Actions } from 'react-native-router-flux';
+import Button from 'react-native-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { setCurrentPosition, toggleLoading, setSkippedLogin, setAuthState } from './actions';
 
 import Login from './scenes/Login';
-import MapList from './scenes/MapList';
+import ParaMap from './scenes/ParaMap';
 import Place from './scenes/Place';
 import ReviewListModal from './components/ReviewListModal';
 import ReviewModal from './scenes/ReviewModal';
+import ParaList from './scenes/ParaList';
+import FiltersModal from './scenes/FiltersModal';
 
 import {
   AccessToken
@@ -36,6 +41,23 @@ class App extends Component {
     );
   }
 
+  renderMapButton() {
+    return (
+      <Button onPress={() => Actions.map()}>
+        <Icon name="ios-map-outline" size={25} color="#a3a3a3" />
+      </Button>
+    );
+  }
+
+  renderFilterButton() {
+    return (
+      <Button onPress={() => Actions.filters()}>
+        <Icon name="ios-funnel-outline" size={25} color="#a3a3a3" />
+      </Button>
+    );
+  }
+
+
 	render() {
 		if(this.props.showLoginScreen) {
       return <Login />
@@ -55,14 +77,16 @@ class App extends Component {
     }
 
 		return (
-        <Router>
-     			<Scene key="root">
-     				<Scene key="map" showNavigationBar={false} component={MapList} title="Map" initial={true} />
-     				<Scene key="placeDetails"  component={Place} title="Details" />
-            <Scene key="reviewListModal" direction="vertical" hideNavBar={true} component={ReviewListModal} />
-     			  <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
-          </Scene>
-        </Router>
+      <Router>
+   			<Scene key="root">
+          <Scene key="placeList" component={ParaList} title="List" initial={true} renderLeftButton={() => this.renderFilterButton()} renderRightButton={() => this.renderMapButton()}/>
+   				<Scene key="map" component={ParaMap} title="Map" />
+   				<Scene key="filters" direction="vertical" hideNavBar={true} component={FiltersModal} />
+          <Scene key="placeDetails" component={Place} title="Details" />
+          <Scene key="reviewListModal" direction="vertical" hideNavBar={true} component={ReviewListModal} />
+   			  <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
+        </Scene>
+      </Router>
    	);
 	}
 }

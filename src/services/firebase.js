@@ -31,6 +31,19 @@ export function postPlaceReview(placeId, review) {
 	})
 }
 
+export function postPlaceRating(placeId, rating) {
+	return new Promise((resolve, reject) => {
+		firestack.auth.getCurrentUser()
+			.then((user) => {
+				rating.reviewer = user.user.uid;
+				firestack.database.ref(`/ratings/${placeId}`).push(rating)
+					.then((res) => { resolve(res) })
+					.catch((err) => { reject(err) })
+			})
+			.catch((err) => { reject(err) })
+	})
+}
+
 export function firebaseFacebookAuth(facebookToken) {
 	return new Promise((resolve, reject) => {
 		firestack.auth.signInWithProvider('facebook', facebookToken, '')

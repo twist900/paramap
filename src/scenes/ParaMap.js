@@ -1,11 +1,12 @@
 import React from 'react';
-import AnimatedViews from '../components/AnimatedViews';
+import MapView from '../components/ParaMap';
 import { connect } from 'react-redux';
 import { selectPlace } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
 const mapStateToProps = (state) => ({
     places: state.nearbyPlaces,
+    currentPosition: state.currentPosition,
     isLoading: state.isLoading
   });
 
@@ -19,6 +20,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const MapList = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AnimatedViews);
+)(MapView);
 
 export default MapList;

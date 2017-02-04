@@ -7,9 +7,10 @@ export const SET_PLACE_DETAILS = 'SET_PLACE_DETAILS';
 export const SET_CURRENT_POSITION = 'SET_CURRENT_POSITION';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const SUBMIT_REVIEW = 'SUBMIT_REVIEW';
+export const SUBMIT_RATING = 'SUBMIT_RATING';
 
 import * as firebase from 'firebase';
-import { getPlaceRatings, getPlaceReviews, postPlaceReview } from '../services/firebase';
+import { getPlaceRatings, getPlaceReviews, postPlaceReview, postPlaceRating } from '../services/firebase';
 import { getPlaceDetails } from '../services/google';
 import { calcRatings } from '../utils/ratings';
 
@@ -97,6 +98,20 @@ export const submitReview = (placeId, review) => {
 				dispatch({
 					type: SUBMIT_REVIEW,
 					review
+				})
+			})
+			.catch((error) => { this.setState({text: error}) })
+	}
+};
+
+export const submitRating = (placeId, rating) => {
+	return dispatch => {
+		postPlaceRating(placeId, rating)
+			.then((res) => {
+				rating.id = res.name[0];
+				dispatch({
+					type: SUBMIT_RATING,
+					rating
 				})
 			})
 			.catch((error) => { this.setState({text: error}) })
