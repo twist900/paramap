@@ -288,7 +288,7 @@ var styles = StyleSheet.create({
     margin: 20
   },
   nameText: {
-    fontSize: 35,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   addressText: {

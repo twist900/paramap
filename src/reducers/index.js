@@ -13,7 +13,6 @@ import {
 import { user } from './user';
 
 var initialState = {
-	selectedPlaceId: '',
 	currentPosition: {
 		longitude: '',
 		latitude: ''
@@ -21,6 +20,7 @@ var initialState = {
 	currentType: '',
 	nearbyPlaces: [],
 	selectedPlace: {
+		id: null,
 		ratingRes: {
 			entrance: 0,
 			parking: 0,

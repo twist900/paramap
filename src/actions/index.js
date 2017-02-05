@@ -54,17 +54,18 @@ export const fetchNearbyPlaces = (placeType) => {
 };
 
 export const selectPlace = (placeId) => {
-	debugger;
 	return dispatch => {
+	  dispatch(toggleLoading(true));
 	  Promise.all([
 	  	getPlaceRatings(placeId),
 	  	getPlaceReviews(placeId),
 	  	getPlaceDetails(placeId)
-	  ]).then(([ratings, reviews, details]) => {
-	  	if(Config.USE_STUBBED_DATA == 'true') {
-		  	details = require('../../data/placeDetails.js').default
-		  }
+	  ]).then(([ratings, reviews, placeDetails]) => {
+	  	// if(Config.USE_STUBBED_DATA == 'true') {
+		  // 	details = require('../../data/placeDetails.js').default
+		  // }
 		  let ratingRes = calcRatings(ratings);
+			let details = placeDetails.result;
 		  let place = {
 		  	ratings,
 		  	ratingRes,
@@ -72,9 +73,9 @@ export const selectPlace = (placeId) => {
 		  	reviews
 		  };
 		  place.id = placeId;
-		  debugger;
 	  	dispatch(setPlaceDetails(place));
 	  }).catch(error => { console.log(error) });
+	  dispatch(toggleLoading(false));
 	}
 }
 

@@ -29,9 +29,11 @@ export const calcRatings = (userRatings) => {
 	let bathroomRating = bathroomCount > 0 ? bathroom/bathroomCount : 0;
 	let entranceRating = entranceCount > 0 ? entrance/entranceCount : 0;
 	let parkingRating = parkingCount > 0 ? parking/parkingCount : 0;
+	let overallScore = (bathroomRating + entranceRating + parkingRating) / 3
 
-
-	return { bathroom: { rating: bathroomRating.toFixed(1), count: bathroomCount },
-					 entrance: { rating: entranceRating.toFixed(1), count: entranceCount},
-					 parking:  { rating: parkingRating.toFixed(1),  count: parkingCount} }
+	return { bathroom: { rating: bathroomRating, count: bathroomCount },
+					 entrance: { rating: entranceRating, count: entranceCount},
+					 parking:  { rating: parkingRating,  count: parkingCount},
+					 count: bathroomCount + entranceCount + parkingCount,
+					 overallScore: overallScore }
 }

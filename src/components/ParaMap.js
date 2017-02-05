@@ -38,13 +38,12 @@ export default class ParaMap extends Component {
   toMarkers(places){
     let markers = places.map( (place) => {
       return ({
-        id: place.place_id,
+        id: place.id,
         name: place.name,
         coordinate: {
           latitude: place.geometry.location.lat,
           longitude: place.geometry.location.lng,
-        },
-        place_id: place.place_id
+        }
       });
     });
     return markers;
