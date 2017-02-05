@@ -27,37 +27,10 @@ export default class Login extends Component{
       fadeAnim: new Animated.Value(0),
     }
   }
+
   componentDidMount(){
     Animated.timing(this.state.fadeAnim, {toValue: 1}).start();
   }
-
-  // loginFacebook () {
-  //   const provider = firestack.auth.FacebookAuthProvider;
-  //   firestack.auth.signOut();
-  //   LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
-  //     .then((result) => {
-  //       if (result.isCancelled) {
-  //         window.alert('Login cancelled')
-  //       } else {
-  //         AccessToken.getCurrentAccessToken()
-  //           .then(accessTokenData => {
-  //             firestack.auth.signInWithProvider('facebook', accessTokenData.accessToken, '')
-  //             .then(credentials => {
-  //               console.log(credentials.user)
-  //             }).catch( err => {
-  //               console.log(err)
-  //             })
-  //           })
-  //           .catch(err => {
-  //             window.alert('Login cancelled')
-  //             console.log(err)
-  //           })
-  //       }
-  //     },
-  //     (error) => {
-  //       window.alert(`Login fail with error: ${error}`)
-  //     })
-  // }
 
   render(){
     return (

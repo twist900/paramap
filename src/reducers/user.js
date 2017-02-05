@@ -3,14 +3,8 @@ import {
 	AUTH_SUCCESS
 } from '../actions/user';
 
-const initialState = {
-	skippedAuth: false,
-	authenticating: false,
-	facebookToken: null,
-	facebookProfile: null
-};
 
-export function user(state = initialState, action) {
+export function user(state = {}, action) {
 	switch (action.type) {
 		case AUTH_SUCCESS :
       return Object.assign({}, state, {

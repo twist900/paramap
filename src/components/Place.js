@@ -83,22 +83,61 @@ class Place extends Component {
         <AdvancedButton onPress={() => {this.refs.entranceRatingModal.open()}}>
           <View style={styles.ratingButton}>
             <Text>Entrance</Text>
-            <Icon name="ios-pizza-outline" size={75} color="#a3a3a3" />
-            <Text>{ this.props.entranceRating.rating }/5</Text>
+            <Image
+              source={require('../../img/entrance.png')}
+              style={{width: 50, height: 50}}
+            />
+            <StarRating
+              selectedStar={(rating)=> {}}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              starColor='#D3E02E'
+              disabled={true}
+              starSize={20}
+              maxStars={5}
+              rating={this.props.entranceRating.rating} />
           </View>
         </AdvancedButton>
         <AdvancedButton onPress={() => {this.refs.bathroomRatingModal.open()}}>
           <View style={styles.ratingButton}>
             <Text>Bathroom</Text>
-            <Icon name="ios-glasses-outline" size={75} color="#a3a3a3" />
-            <Text>{ this.props.bathroomRating.rating }/5</Text>
+            <Image
+              source={require('../../img/bathroom.png')}
+              style={{width: 50, height: 50}}
+            />
+            <StarRating
+              selectedStar={(rating)=> {}}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              starColor='#D3E02E'
+              starSize={20}
+              maxStars={5}
+              disabled={true}
+              rating={this.props.bathroomRating.rating} />
           </View>
         </AdvancedButton>
         <AdvancedButton onPress={()=> {this.refs.parkingRatingModal.open()}}>
           <View style={styles.ratingButton}>
             <Text>Parking</Text>
-            <Icon name="ios-flask-outline" size={75} color="#a3a3a3" />
-            <Text>{ this.props.parkingRating.rating }/5</Text>
+            <Image
+              source={require('../../img/parking.png')}
+              style={{width: 60, height: 50, padding: 10}}
+            />
+            <StarRating
+              selectedStar={(rating)=> {}}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              starColor='#D3E02E'
+              disabled={true}
+              starSize={20}
+              maxStars={5}
+              rating={this.props.parkingRating.rating} />
           </View>
         </AdvancedButton>
       </View>
@@ -184,12 +223,14 @@ class Place extends Component {
         </View>
       );
     }
-
-    // require('../../img/placeholder.png');
+    let backgroundSource = require('../../img/placeholder.png');
+    if (this.props.place.details){
+      backgroundSource = { uri: this.placePhotoUrl(this.props.place.details.photos[0].photo_reference) }
+    }
     return (
       <View style={{flex: 1}}>
         <ParallaxView
-          backgroundSource={{ uri: this.placePhotoUrl(this.props.place.details.photos[0].photo_reference) }}
+          backgroundSource={backgroundSource}
           windowHeight={350}
           >
           <View style={styles.descContainer}>
@@ -312,7 +353,10 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   ratingButton: {
-    flex: 1, alignItems: 'center'
+    flex: 1,
+    height: 110,
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });
 
