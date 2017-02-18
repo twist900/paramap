@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "198786189733",
+    "firebase_url": "https://paramap-ios.firebaseio.com",
+    "project_id": "paramap-ios",
+    "storage_bucket": "paramap-ios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198786189733:android:d59d21bdbc44a5ff",
+        "android_client_info": {
+          "package_name": "com.paramap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198786189733-or7u9o30cbpdh2nps1soau5do8tsuap2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUFJ0bDNB_E3xrocEo1lF-esdWZq9J1Aw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
