@@ -34,7 +34,7 @@ class FiltersModal extends Component {
 	}
 
 	renderFilterItem(rowData) {
-		return (
+    return (
 			<TouchableOpacity
 				activeOpacity={0.9}
 				style={styles.slideInnerContainer}
@@ -42,11 +42,9 @@ class FiltersModal extends Component {
 			>
 				<View style={styles.imageContainer}>
 					<Image
-						source={{ uri: rowData.image }}
+						source={rowData.image}
 						style={styles.image} >
-						<BlurView blurType="dark" blurAmount={0.1} style={styles.blur}>
 							<Text style={styles.filterTitle}>{rowData.type}</Text>
-						</BlurView>
 					</Image>
 				</View>
 			</TouchableOpacity>
@@ -110,6 +108,7 @@ let styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+
     backgroundColor: '#888888',
   },
   modal: {
@@ -119,6 +118,8 @@ let styles = StyleSheet.create({
   image: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: null,
     height: null,
   },

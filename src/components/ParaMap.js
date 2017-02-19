@@ -97,6 +97,8 @@ export default class ParaMap extends Component {
             sliderWidth={slideWidth}
             itemWidth={slideWidth}
             onSnapToItem={this.zoomToRegion.bind(this)}
+            snapOnAndroid={true}
+            enableMomentum={true}
            />
         </View>
 
