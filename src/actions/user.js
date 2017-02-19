@@ -1,9 +1,3 @@
-import {
-  GraphRequest,
-  GraphRequestManager,
-  AccessToken
-} from 'react-native-fbsdk';
-
 import { facebookLoginAPI, getFacebookInfoAPI } from '../services/facebook'
 import { firebaseFacebookAuth, postProfile } from '../services/firebase';
 

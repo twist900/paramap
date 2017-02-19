@@ -1,5 +1,3 @@
-import Config from 'react-native-config';
-
 export const REQUEST_PLACES = 'REQUEST_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
@@ -11,7 +9,6 @@ export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const SUBMIT_REVIEW = 'SUBMIT_REVIEW';
 export const SUBMIT_RATING = 'SUBMIT_RATING';
 
-import * as firebase from 'firebase';
 import { getPlaceRatings, getPlaceReviews, postPlaceReview, postPlaceRating } from '../services/firebase';
 import { getPlaceDetails, getNearbyPlaces } from '../services/google';
 import { calcRatings } from '../utils/ratings';
@@ -40,16 +37,10 @@ export const fetchNearbyPlaces = (placeType) => {
 		dispatch(toggleLoading(true));
 		dispatch(requestPlaces);
 
-		// As Google Places Api has a request threshold, for development purposes,
-		// we use stubbed data
-		// if(Config.USE_STUBBED_DATA == 'true') {
-		// 	dispatch(receivePlaces({ results: require('../../data/places.js').default }));
-		// } else {
-			getNearbyPlaces(placeType)
-				.then(response => response.json())
-				.then(json => dispatch(receivePlaces(json)))
-				.catch(error => console.log(error))
-		// }
+		getNearbyPlaces(placeType)
+			.then(response => response.json())
+			.then(json => dispatch(receivePlaces(json)))
+			.catch(error => console.log(error))
 	};
 };
 
@@ -61,9 +52,6 @@ export const selectPlace = (placeId) => {
 	  	getPlaceReviews(placeId),
 	  	getPlaceDetails(placeId)
 	  ]).then(([ratings, reviews, placeDetails]) => {
-	  	// if(Config.USE_STUBBED_DATA == 'true') {
-		  // 	details = require('../../data/placeDetails.js').default
-		  // }
 		  let ratingRes = calcRatings(ratings);
 			let details = placeDetails.result;
 		  let place = {
@@ -112,13 +100,13 @@ export const submitRating = (placeId, rating) => {
 	}
 };
 
-export const setPlaceSearchType = (type) => {
+export const setPlaceSearchType = (human_type, google_type) => {
 	return dispatch => {
 		dispatch({
 			type: SET_PLACE_TYPE,
-			placeType: type
+			placeType: human_type
 		});
-		dispatch(fetchNearbyPlaces(type));
+		dispatch(fetchNearbyPlaces(google_type));
 	}
 }
 

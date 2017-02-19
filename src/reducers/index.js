@@ -97,6 +97,7 @@ const rootReducer = combineReducers({
   selectedPlace,
   nearbyPlaces,
   isLoading,
+  currentType,
   user
 });
 

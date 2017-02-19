@@ -5,9 +5,10 @@ import {
 	StyleSheet,
   ActivityIndicator,
   Navigator,
-  Text
+  Text,
+  Platform
 } from 'react-native';
-import { Scene, Router, Schema, Actions } from 'react-native-router-flux';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -20,10 +21,6 @@ import ReviewListModal from './components/ReviewListModal';
 import ReviewModal from './scenes/ReviewModal';
 import ParaList from './scenes/ParaList';
 import FiltersModal from './scenes/FiltersModal';
-
-import {
-  AccessToken
-} from 'react-native-fbsdk';
 
 class App extends Component {
 	constructor(props) {
@@ -58,10 +55,7 @@ class App extends Component {
 
     if(this.props.isLoading || (this.props.nearbyPlaces.length == 0)){
       return (
-        <View style={{
-          flex: 1,
-          justifyContent: 'center'
-        }}>
+        <View style={styles.container}>
           <ActivityIndicator
             size="large"
             animating={true} />
@@ -69,13 +63,38 @@ class App extends Component {
       );
     }
 
+    const Navbar = Platform.select({
+      ios: () => {},
+      android: () => require('./components/Navbar.android').default,
+    })();
+
 		return (
       <Router>
-   			<Scene key="root">
-          <Scene key="placeList" component={ParaList} title="List" initial={true} renderLeftButton={() => this.renderFilterButton()} renderRightButton={() => this.renderMapButton()}/>
-   				<Scene key="map" component={ParaMap} title="Map" />
+   			<Scene key="root" navBar={Navbar}>
+          <Scene key="placeList"
+            component={ParaList}
+            title={this.props.currentType}
+            initial={true}
+            renderLeftButton={() => this.renderFilterButton()}
+            renderRightButton={() => this.renderMapButton()}
+            leftIconAndroid='menu'
+            rightIconAndroid='map'
+            onLeftPressAndroid={() => Actions.filters()}
+            onRightPressAndroid={() => Actions.map()}
+          />
+   				<Scene key="map"
+            component={ParaMap}
+            title="Map"
+            leftIconAndroid='arrow-back'
+            onLeftPressAndroid={() => Actions.placeList()}
+          />
    				<Scene key="filters" direction="vertical" hideNavBar={true} component={FiltersModal} />
-          <Scene key="placeDetails" component={Place} title="Details" />
+          <Scene
+            key="placeDetails"
+            component={Place} title="Details"
+            leftIconAndroid='arrow-back'
+            onLeftPressAndroid={() => Actions.pop()}
+          />
           <Scene key="reviewListModal" direction="vertical" hideNavBar={true} component={ReviewListModal} />
    			  <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
         </Scene>
@@ -86,7 +105,8 @@ class App extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   }
 })
 
@@ -95,8 +115,8 @@ const mapPropsToState = (state) => ({
   isLoading: state.isLoading,
   nearbyPlaces: state.nearbyPlaces,
   user: state.user,
-  currentType: state.currentType
+  currentType: state.currentType,
+  state: state
 });
 
-// ;
 export default connect(mapPropsToState)(App);

@@ -73,7 +73,6 @@
 		DB6E7E9DE8014BB4A1BB5F18 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A6D99474A844CE897FFC403 /* FontAwesome.ttf */; };
 		EC7B9DE32A694D07B21C4252 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5040C684BACB4BB08C66FC23 /* MaterialCommunityIcons.ttf */; };
 		FF4ED7B4737E47BBB010CF76 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3C2C8CE03E448FA960DBD0 /* libReactNativeConfig.a */; };
-		613FCB6DBA2C484E8594C039 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F763559A840ED80741F4B /* libRCTFBSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,8 +403,6 @@
 		DBCAADB7CDAE4EBAA4E42AC1 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		E3EF7C83FFCEF4F2D174AD51 /* Pods-paramap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-paramap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-paramap/Pods-paramap.debug.xcconfig"; sourceTree = "<group>"; };
 		FCAD40397005434D97776188 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		177A99E1A01E487F831A9F00 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; name = "RCTFBSDK.xcodeproj"; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		E29F763559A840ED80741F4B /* libRCTFBSDK.a */ = {isa = PBXFileReference; name = "libRCTFBSDK.a"; path = "libRCTFBSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,7 +434,6 @@
 				1880322D1B62448D88790A83 /* libRNBlur.a in Frameworks */,
 				61FB588F8D744FEAB5DA98C0 /* libFirestack.a in Frameworks */,
 				9CF1B638DE0E923D14AC1DA9 /* libPods-paramap.a in Frameworks */,
-				613FCB6DBA2C484E8594C039 /* libRCTFBSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +714,6 @@
 				4B5FAEB9BB5E4419A37C45B7 /* RNVectorIcons.xcodeproj */,
 				83224D3A61DD4941857F598A /* RNBlur.xcodeproj */,
 				2E49ADDB523B42408E6C45F4 /* Firestack.xcodeproj */,
-				177A99E1A01E487F831A9F00 /* RCTFBSDK.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1309,7 +1304,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/paramap.app/paramap";
@@ -1326,7 +1320,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/paramap.app/paramap";

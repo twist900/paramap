@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
-import _ from 'lodash';
 
 import PlaceSlide from './PlaceItem';
 

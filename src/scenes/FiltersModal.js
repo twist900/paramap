@@ -6,17 +6,13 @@ import {
 	ListView,
 	PixelRatio,
 	Dimensions,
-	Platform,
 	TouchableOpacity,
 	Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import Button from 'react-native-button';
-import ReviewItem from '../components/ReviewItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
-import { BlurView } from 'react-native-blur';
-
 import { setPlaceSearchType } from '../actions';
 
 class FiltersModal extends Component {
@@ -38,13 +34,18 @@ class FiltersModal extends Component {
 			<TouchableOpacity
 				activeOpacity={0.9}
 				style={styles.slideInnerContainer}
-				onPress={() => { this.props.dispatch(setPlaceSearchType(rowData.google_type))}}
+				onPress={() => {
+         this.props.dispatch(setPlaceSearchType(rowData.type, rowData.google_type));
+         Actions.pop();
+        }}
 			>
 				<View style={styles.imageContainer}>
 					<Image
 						source={rowData.image}
 						style={styles.image} >
-							<Text style={styles.filterTitle}>{rowData.type}</Text>
+            <View style={styles.backdropView}>
+              <Text style={styles.filterTitle}>{rowData.type}</Text>
+            </View>
 					</Image>
 				</View>
 			</TouchableOpacity>
@@ -108,7 +109,6 @@ let styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-
     backgroundColor: '#888888',
   },
   modal: {
@@ -123,35 +123,16 @@ let styles = StyleSheet.create({
     width: null,
     height: null,
   },
-  blur: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+  backdropView: {
+    height: 120,
+    width: 320,
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   filterTitle: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 24,
     letterSpacing: 0.5
-  },
-  textContainer: {
-    justifyContent: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    backgroundColor: 'white',
-  },
-  title: {
-    color: '#1a1917',
-    fontSize: 13,
-    fontWeight: 'bold',
-    letterSpacing: 0.5
-  },
-  subtitle: {
-    marginTop: 6,
-    color: '#888888',
-    fontSize: 12,
-    fontStyle: 'italic'
   }
 });
 

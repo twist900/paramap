@@ -6,7 +6,8 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 	Dimensions,
-	Platform} from 'react-native';
+	Platform
+} from 'react-native';
 import Config from 'react-native-config';
 import {getPlaceRatings} from '../services/firebase';
 import {calcRatings} from '../utils/ratings';
@@ -82,11 +83,13 @@ export default class PlaceItem extends Component {
   }
   render() {
 		let { place } = this.props;
-		let uri = "'../../img/placeholder.png'";
-	  if(place.photos && place.photos.length > 0) {
-	    const image = place.photos[0];
-	    uri = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
-	  }
+    let uri = '';
+    if(place.photos && place.photos.length > 0) {
+      const image = place.photos[0];
+      uri = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
+    } else {
+      uri = 'https://engeb.s3.amazonaws.com/uploads/image/file/204/placeholder.jpg'
+    }
 
 		return (
 			<TouchableOpacity

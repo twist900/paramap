@@ -10,7 +10,6 @@ import {
   Dimensions
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
 import HTML from 'react-native-htmlview';
 let screen = Dimensions.get('window');
 

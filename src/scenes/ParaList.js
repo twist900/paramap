@@ -24,6 +24,7 @@ class ParaList extends Component {
    	};
 	}
 
+
 	renderRow(rowData) {
 		return (
 			<PlaceSlide
@@ -66,7 +67,7 @@ let width =  Dimensions.width;
 let styles = StyleSheet.create({
 	container: {
 	  flex: 1,
-	  paddingTop: 65,
+	  paddingTop: 56,
 	  alignItems: 'center'
 	}
 });

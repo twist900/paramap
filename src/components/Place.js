@@ -14,12 +14,10 @@ import {
 } from 'react-native';
 
 import Config from 'react-native-config';
-import Gallery from 'react-native-gallery';
 import Modal from 'react-native-modalbox';
 import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AdvancedButton from 'react-native-button';
-import TabView from 'react-native-scrollable-tab-view';
 import StarRating from 'react-native-star-rating';
 import { Actions } from 'react-native-router-flux';
 import ParallaxView from "react-native-parallax-view";
@@ -211,7 +209,7 @@ class Place extends Component {
   }
 
   render() {
-    if(this.props.isLoading || this.props.place == null){
+    if(this.props.isLoading || !this.props.place.details){
       return (
         <View style={{
             flex: 1,
@@ -223,14 +221,19 @@ class Place extends Component {
         </View>
       );
     }
-    let backgroundSource = require('../../img/placeholder.png');
-    if (this.props.place.details){
-      backgroundSource = { uri: this.placePhotoUrl(this.props.place.details.photos[0].photo_reference) }
+
+    let uri = '';
+
+    if(this.props.place.details.photos) {
+      uri = this.placePhotoUrl(this.props.place.details.photos[0].photo_reference);
+    } else {
+      uri = 'https://engeb.s3.amazonaws.com/uploads/image/file/204/placeholder.jpg'
     }
+
     return (
       <View style={{flex: 1}}>
         <ParallaxView
-          backgroundSource={backgroundSource}
+          backgroundSource={{ uri }}
           windowHeight={350}
           >
           <View style={styles.descContainer}>
@@ -240,7 +243,7 @@ class Place extends Component {
           <View style={styles.separator} />
           { this.renderRatings() }
           <View style={styles.separator} />
-          {this.renderImageCarousel()}
+          {this.props.place.details.photos && this.renderImageCarousel()}
           <View style={styles.separator} />
           {this.renderReviewPreview()}
         </ParallaxView>
@@ -310,18 +313,6 @@ var styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  galleryContainer: {
-    height: screen.height / 1.8
-  },
-  gallery: {
-    backgroundColor: 'black'
-  },
-  reviewButton: {
-    backgroundColor: '#5AD427',
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   descContainer: {
     height: 60,
     alignItems: 'flex-start',
@@ -335,17 +326,6 @@ var styles = StyleSheet.create({
   addressText: {
     fontSize: 14,
     fontFamily: 'Helvetica',
-  },
-  topAndBottom: {
-    borderTopColor: '#d8d8d8',
-    borderTopWidth: border.width,
-    borderBottomColor: '#d8d8d8',
-    borderBottomWidth: border.width,
-  },
-  judgementArea: {
-    marginTop: 10,
-    backgroundColor: '#FFF',
-    padding: 12
   },
   ratings: {
     flexDirection: 'row',
