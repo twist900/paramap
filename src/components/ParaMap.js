@@ -98,6 +98,7 @@ export default class ParaMap extends Component {
             onSnapToItem={this.zoomToRegion.bind(this)}
             snapOnAndroid={true}
             enableMomentum={true}
+            decelerationRate='fast'
            />
         </View>
 
