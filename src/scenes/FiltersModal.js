@@ -131,7 +131,7 @@ let styles = StyleSheet.create({
   filterTitle: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 32,
     letterSpacing: 0.5
   }
 });
