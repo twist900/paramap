@@ -17,32 +17,32 @@ import { getProfile } from '../services/firebase';
 
 class ReviewItem extends Component {
   constructor(props) {
-  	super(props);
+    super(props);
 
-  	this.state = {
-  		reviewer: null
-  	};
+    this.state = {
+      reviewer: null
+    };
   }
 
   componentWillMount() {
-  	getProfile(this.props.review.reviewer)
+    getProfile(this.props.review.reviewer)
       .then(reviewer => { this.setState({reviewer})})
       .catch(err => console.log(err));
   }
 
   render() {
-  	if( this.state.reviewer == null ) {
-  		return (
-  		  <View style={{
-  		    flex: 1,
-  		    justifyContent: 'center'
-  		  }}>
-  		    <ActivityIndicator
-  		      size="large"
-  		      animating={true} />
-  		  </View>
-  		);
-  	}
+    if( this.state.reviewer == null ) {
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}>
+          <ActivityIndicator
+            size="large"
+            animating={true} />
+        </View>
+      );
+    }
 
     return <View>
       <TouchableHighlight onPress={()=>{}}
@@ -68,7 +68,7 @@ class ReviewItem extends Component {
 }
 
 ReviewItem.propTypes = {
-	review: PropTypes.object.isRequired
+  review: PropTypes.object.isRequired
 };
 
 var styles = StyleSheet.create({

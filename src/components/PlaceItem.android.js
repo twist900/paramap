@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {
-	View,
-	Text,
-	Image,
-	TouchableOpacity,
-	StyleSheet,
-	Dimensions
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions
 } from 'react-native';
 import Config from 'react-native-config';
 import { getPlaceRatings } from '../services/firebase';
@@ -72,17 +72,17 @@ export default class PlaceItem extends Component {
     );
   }
   render() {
-		let { place } = this.props;
-		let uri = '';
-	  if(place.photos && place.photos.length > 0) {
+    let { place } = this.props;
+    let uri = '';
+    if(place.photos && place.photos.length > 0) {
       const image = place.photos[0];
-	    uri = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
+      uri = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${image.photo_reference}&key=${Config.GOOGLE_MAPS_API_KEY}`;
     } else {
       uri = 'https://engeb.s3.amazonaws.com/uploads/image/file/204/placeholder.jpg'
     }
 
-		return (
-			<View>
+    return (
+      <View>
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={() => this.props.onPlaceClick(place.place_id)}
@@ -100,13 +100,13 @@ export default class PlaceItem extends Component {
           </Card>
         </TouchableOpacity>
       </View>
-		);
-	}
+    );
+  }
 }
 
 PlaceItem.PropTypes = {
-	place: PropTypes.object.isRequired,
-	onPlaceClick: PropTypes.func.isRequired,
+  place: PropTypes.object.isRequired,
+  onPlaceClick: PropTypes.func.isRequired,
   isSlider: PropTypes.bool.isRequired
 }
 

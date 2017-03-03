@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-	View,
-	StyleSheet,
+  View,
+  StyleSheet,
   ActivityIndicator,
   Navigator,
   Text,
@@ -23,9 +23,9 @@ import ParaList from './scenes/ParaList';
 import FiltersModal from './scenes/FiltersModal';
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
   componentWillMount() {
     this.props.dispatch(fetchNearbyPlaces(this.props.currentType));
@@ -48,10 +48,10 @@ class App extends Component {
   }
 
 
-	render() {
-		if(this.props.showLoginScreen) {
+  render() {
+    if(this.props.showLoginScreen) {
       return <Login />
-		}
+    }
 
     if(this.props.isLoading || (this.props.nearbyPlaces.length == 0)){
       return (
@@ -68,9 +68,9 @@ class App extends Component {
       android: () => require('./components/Navbar.android').default,
     })();
 
-		return (
+    return (
       <Router>
-   			<Scene key="root" navBar={Navbar}>
+        <Scene key="root" navBar={Navbar}>
           <Scene key="placeList"
             component={ParaList}
             title={this.props.currentType}
@@ -82,13 +82,13 @@ class App extends Component {
             onLeftPressAndroid={() => Actions.filters()}
             onRightPressAndroid={() => Actions.map()}
           />
-   				<Scene key="map"
+          <Scene key="map"
             component={ParaMap}
             title="Map"
             leftIconAndroid='arrow-back'
             onLeftPressAndroid={() => Actions.placeList()}
           />
-   				<Scene key="filters" direction="vertical" hideNavBar={true} component={FiltersModal} />
+          <Scene key="filters" direction="vertical" hideNavBar={true} component={FiltersModal} />
           <Scene
             key="placeDetails"
             component={Place} title="Details"
@@ -96,11 +96,11 @@ class App extends Component {
             onLeftPressAndroid={() => Actions.pop()}
           />
           <Scene key="reviewListModal" direction="vertical" hideNavBar={true} component={ReviewListModal} />
-   			  <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
+          <Scene key="reviewModal" direction="vertical" hideNavBar={true} component={ReviewModal} />
         </Scene>
       </Router>
-   	);
-	}
+    );
+  }
 }
 
 var styles = StyleSheet.create({

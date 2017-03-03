@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import {
-	View,
-	Text,
-	StyleSheet,
-	ListView,
-	PixelRatio,
-	Dimensions,
-	TouchableOpacity,
-	Image
+  View,
+  Text,
+  StyleSheet,
+  ListView,
+  PixelRatio,
+  Dimensions,
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import Button from 'react-native-button';
@@ -16,59 +16,59 @@ import { Actions } from 'react-native-router-flux';
 import { setPlaceSearchType } from '../actions';
 
 class FiltersModal extends Component {
-	constructor(props) {
-		super(props)
+  constructor(props) {
+    super(props)
 
-		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-		this.state = {
-     	dataSource: ds.cloneWithRows(require('../../data/placeTypes.js').default),
-   	};
-	}
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(require('../../data/placeTypes.js').default),
+    };
+  }
 
-	onCloseModal() {
-		Actions.pop();
-	}
+  onCloseModal() {
+    Actions.pop();
+  }
 
-	renderFilterItem(rowData) {
+  renderFilterItem(rowData) {
     return (
-			<TouchableOpacity
-				activeOpacity={0.9}
-				style={styles.slideInnerContainer}
-				onPress={() => {
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={styles.slideInnerContainer}
+        onPress={() => {
          this.props.dispatch(setPlaceSearchType(rowData.type, rowData.google_type));
          Actions.pop();
         }}
-			>
-				<View style={styles.imageContainer}>
-					<Image
-						source={rowData.image}
-						style={styles.image} >
+      >
+        <View style={styles.imageContainer}>
+          <Image
+            source={rowData.image}
+            style={styles.image} >
             <View style={styles.backdropView}>
               <Text style={styles.filterTitle}>{rowData.type}</Text>
             </View>
-					</Image>
-				</View>
-			</TouchableOpacity>
-		);
-	}
+          </Image>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 
-	render() {
-		return (
-			<View style={styles.container}>
-				<View style={styles.closeModal}>
-					<Button onPress={this.onCloseModal}>
-						<Icon name="ios-close" style={[styles.btn, styles.btnModal]} size={45} color="#a3a3a3" />
-					</Button>
-				</View>
-				<View style={styles.modal}>
-					<ListView
-		        dataSource={this.state.dataSource}
-		        renderRow={(rowData) => this.renderFilterItem(rowData)}
-		      />
-				</View>
-			</View>
-		);
-	}
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.closeModal}>
+          <Button onPress={this.onCloseModal}>
+            <Icon name="ios-close" style={[styles.btn, styles.btnModal]} size={45} color="#a3a3a3" />
+          </Button>
+        </View>
+        <View style={styles.modal}>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) => this.renderFilterItem(rowData)}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 export const border = {
@@ -82,14 +82,14 @@ const slideHeight = viewportHeight * 0.25;
 const slideWidth = viewportWidth;
 
 let styles = StyleSheet.create({
-	container: {
-		marginTop: 25,
-	  flex: 1,
-	},
+  container: {
+    marginTop: 25,
+    flex: 1,
+  },
   closeModal: {
-  	height: 40,
-  	borderBottomColor: '#d8d8d8',
-  	borderBottomWidth: border.width,
+    height: 40,
+    borderBottomColor: '#d8d8d8',
+    borderBottomWidth: border.width,
   },
   btn: {
     margin: 20,
@@ -112,8 +112,8 @@ let styles = StyleSheet.create({
     backgroundColor: '#888888',
   },
   modal: {
-  	justifyContent: 'center',
-  	alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   image: {
     ...StyleSheet.absoluteFillObject,
