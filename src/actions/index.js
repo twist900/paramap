@@ -1,3 +1,7 @@
+import { getPlaceRatings, getPlaceReviews, postPlaceReview, postPlaceRating } from '../services/firebase';
+import { getPlaceDetails, getNearbyPlaces } from '../services/google';
+import { calcRatings } from '../utils/ratings';
+
 export const REQUEST_PLACES = 'REQUEST_PLACES';
 export const RECEIVE_PLACES = 'RECEIVE_PLACES';
 export const SELECT_PLACE = 'SELECT_PLACE';
@@ -9,28 +13,24 @@ export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const SUBMIT_REVIEW = 'SUBMIT_REVIEW';
 export const SYNC_PLACE_RATINGS = 'SYNC_PLACE_RATINGS';
 
-import { getPlaceRatings, getPlaceReviews, postPlaceReview, postPlaceRating } from '../services/firebase';
-import { getPlaceDetails, getNearbyPlaces } from '../services/google';
-import { calcRatings } from '../utils/ratings';
-
 export const toggleLoading = (isLoading) => ({
   type: TOGGLE_LOADING,
-  isLoading
+  isLoading,
 });
 
 export const requestPlaces = () => ({
-    type: REQUEST_PLACES,
-  });
+  type: REQUEST_PLACES,
+});
 
-export const receivePlaces = (json) => {
-  return dispatch => {
+export const receivePlaces = json => (
+  (dispatch) => {
     dispatch({
       type: RECEIVE_PLACES,
-      places: Array.from(json.results)
+      places: Array.from(json.results),
     });
     dispatch(toggleLoading(false));
   }
-};
+);
 
 export const fetchNearbyPlaces = (placeType) => {
   return dispatch => {
