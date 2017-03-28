@@ -1,4 +1,4 @@
-# Paramap
+Paramap
 =========
 
 ## University Project
