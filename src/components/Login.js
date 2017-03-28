@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   View,
   Image,
@@ -7,32 +7,24 @@ import {
   StyleSheet,
   Animated,
   Dimensions,
-  Text
+  Text,
  } from 'react-native';
-
-import {
-  LoginManager,
-  AccessToken
-} from 'react-native-fbsdk';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Firestack from 'react-native-firestack'
-const firestack = new Firestack();
-
-export default class Login extends Component{
-  constructor(props){
+export default class Login extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
-    }
+    };
   }
 
-  componentDidMount(){
-    Animated.timing(this.state.fadeAnim, {toValue: 1}).start();
+  componentDidMount() {
+    Animated.timing(this.state.fadeAnim, { toValue: 1 }).start();
   }
 
-  render(){
+  render() {
     return (
       <Image
         source={require('../../img/login_background.jpg')}
@@ -75,7 +67,7 @@ Login.propTypes = {
   onLoginPressed: PropTypes.func.isRequired
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
