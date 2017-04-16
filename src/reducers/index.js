@@ -1,24 +1,22 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
-  SELECT_PLACE,
   SET_PLACE_DETAILS,
-  REQUEST_PLACES,
   RECEIVE_PLACES,
   SET_CURRENT_POSITION,
   TOGGLE_LOADING,
   SUBMIT_REVIEW,
   SET_PLACE_TYPE,
   SYNC_PLACE_RATINGS
-} from '../actions';
-import { user } from './user';
+} from "../actions";
+import { user } from "./user";
 
-var initialState = {
+const initialState = {
   currentPosition: {
-    longitude: '',
-    latitude: ''
+    longitude: "",
+    latitude: ""
   },
-  currentType: '',
+  currentType: "",
   nearbyPlaces: [],
   selectedPlace: {
     id: null,
@@ -28,14 +26,14 @@ var initialState = {
       bathroom: 0
     }
   }
-}
+};
 
 // For developing purposes have the current coordinates fixed
 const LATITUDE = 51.75391;
 const LONGITUDE = 0.1278;
 
 function selectedPlace(state = initialState.selectedPlace, action) {
-  switch(action.type){
+  switch (action.type) {
     case SET_PLACE_DETAILS:
       return Object.assign({}, state, action.place);
     case SUBMIT_REVIEW:
@@ -54,16 +52,19 @@ function selectedPlace(state = initialState.selectedPlace, action) {
         ...state,
         ratingRes: action.ratingRes,
         ratings: action.ratings
-      }
+      };
     default:
       return state;
   }
 }
 
-function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, action) {
-  switch(action.type) {
+function currentPosition(
+  state = { latitude: LATITUDE, longitude: LONGITUDE },
+  action
+) {
+  switch (action.type) {
     case SET_CURRENT_POSITION:
-      let position = Object.assign({}, state, {
+      const position = Object.assign({}, state, {
         latitude: action.position.latitude,
         longitude: action.position.longitude
       });
@@ -73,17 +74,17 @@ function currentPosition(state = { latitude: LATITUDE, longitude: LONGITUDE }, a
   }
 }
 
-function currentType(state = 'Restaurant', action) {
-  switch(action.type) {
+function currentType(state = "Restaurant", action) {
+  switch (action.type) {
     case SET_PLACE_TYPE:
-      return action.placeType
+      return action.placeType;
     default:
       return state;
   }
 }
 
-function nearbyPlaces( state = initialState.nearbyPlaces, action){
-  switch(action.type){
+function nearbyPlaces(state = initialState.nearbyPlaces, action) {
+  switch (action.type) {
     case RECEIVE_PLACES:
       return action.places;
     default:
@@ -91,8 +92,8 @@ function nearbyPlaces( state = initialState.nearbyPlaces, action){
   }
 }
 
-function isLoading( state = false, action) {
-  switch(action.type) {
+function isLoading(state = false, action) {
+  switch (action.type) {
     case TOGGLE_LOADING:
       return action.isLoading;
     default:
