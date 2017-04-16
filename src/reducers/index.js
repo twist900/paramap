@@ -30,8 +30,9 @@ var initialState = {
   }
 }
 
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+// For developing purposes have the current coordinates fixed
+const LATITUDE = 51.75391;
+const LONGITUDE = 0.1278;
 
 function selectedPlace(state = initialState.selectedPlace, action) {
   switch(action.type){
